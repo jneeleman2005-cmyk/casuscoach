@@ -2,6 +2,8 @@
 
 import { useMemo, useRef, useState } from "react";
 
+const FREE_CASE_LIMIT = 1;
+
 const subjects = [
   {
     name: "Strafrecht",
@@ -148,7 +150,7 @@ export default function CasusPage() {
 
   const subject = subjects.find((item) => item.slug === selectedSubject);
 
-  const filteredCases = useMemo(() => {
+  const allFilteredCases = useMemo(() => {
     const matchingCases = cases.filter((item) => {
       return item.subject === selectedSubject && selectedTopics.includes(item.topic);
     });
@@ -173,6 +175,7 @@ export default function CasusPage() {
     return [];
   }, [selectedSubject, selectedTopics, subject?.name]);
 
+  const filteredCases = allFilteredCases.slice(0, FREE_CASE_LIMIT);
   const currentCase = filteredCases[currentCaseIndex];
 
   function selectSubject(slug: string) {
@@ -214,6 +217,11 @@ export default function CasusPage() {
 
     if (selectedTopics.length === 0) {
       alert("Kies minimaal één leerstuk.");
+      return;
+    }
+
+    if (allFilteredCases.length === 0) {
+      alert("Voor deze selectie staan nog geen casussen klaar.");
       return;
     }
 
@@ -277,6 +285,15 @@ export default function CasusPage() {
               </p>
             </div>
 
+            <div className="mt-6 h-2 overflow-hidden rounded-full bg-slate-800">
+              <div
+                className="h-full bg-white transition-all"
+                style={{
+                  width: `${((currentCaseIndex + 1) / filteredCases.length) * 100}%`,
+                }}
+              />
+            </div>
+
             <h1 className="mt-6 text-3xl font-bold">{currentCase.title}</h1>
 
             <div className="mt-6 rounded-2xl border border-slate-700 bg-slate-950 p-6">
@@ -334,6 +351,27 @@ export default function CasusPage() {
                   </p>
                 </div>
 
+                {allFilteredCases.length > FREE_CASE_LIMIT && (
+                  <div className="rounded-2xl border border-yellow-700 bg-yellow-950/30 p-6">
+                    <h2 className="text-2xl font-bold text-yellow-100">
+                      Gratis demo afgerond
+                    </h2>
+
+                    <p className="mt-4 leading-8 text-yellow-100/80">
+                      Deze selectie bevat {allFilteredCases.length} casussen. In
+                      de gratis demo kreeg je er {FREE_CASE_LIMIT}. Upgrade naar
+                      een studentenabonnement voor onbeperkt casussen oefenen.
+                    </p>
+
+                    <a
+                      href="/abonnementen"
+                      className="mt-5 inline-block rounded-xl bg-white px-5 py-3 font-semibold text-slate-950 transition hover:bg-slate-200"
+                    >
+                      Bekijk studentenprijzen
+                    </a>
+                  </div>
+                )}
+
                 <button
                   onClick={nextCase}
                   className="rounded-xl bg-white px-6 py-3 font-semibold text-slate-950 transition hover:bg-slate-200"
@@ -357,6 +395,21 @@ export default function CasusPage() {
           ← Terug naar oefenvormen
         </a>
 
+        <div className="mt-8 rounded-2xl border border-yellow-700 bg-yellow-950/30 p-5">
+          <p className="font-semibold text-yellow-200">Gratis demo actief</p>
+          <p className="mt-2 text-sm leading-6 text-yellow-100/80">
+            Je kunt nu maximaal {FREE_CASE_LIMIT} casus per selectie oefenen.
+            Upgrade naar een studentenabonnement voor onbeperkt casussen oefenen.
+          </p>
+
+          <a
+            href="/abonnementen"
+            className="mt-4 inline-block rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-200"
+          >
+            Bekijk studentenprijzen
+          </a>
+        </div>
+
         <section className="mt-10">
           <p className="text-sm font-semibold uppercase tracking-wide text-slate-400">
             Casus oplossen
@@ -366,8 +419,8 @@ export default function CasusPage() {
 
           <p className="mt-5 max-w-3xl leading-8 text-slate-300">
             Kies eerst een rechtsgebied. Daarna selecteer je één of meerdere
-            leerstukken die je wilt oefenen. Je krijgt vervolgens casussen die
-            passen bij jouw selectie.
+            leerstukken die je wilt oefenen. Je krijgt in de gratis demo een
+            beperkte selectie van casussen.
           </p>
         </section>
 
@@ -479,10 +532,19 @@ export default function CasusPage() {
             </div>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-slate-400">
-                Geselecteerd: {selectedTopics.length} leerstuk
-                {selectedTopics.length === 1 ? "" : "ken"}
-              </p>
+              <div>
+                <p className="text-sm text-slate-400">
+                  Geselecteerd: {selectedTopics.length} leerstuk
+                  {selectedTopics.length === 1 ? "" : "ken"}
+                </p>
+
+                {selectedTopics.length > 0 && (
+                  <p className="mt-2 text-sm text-slate-500">
+                    Gratis beschikbaar: {filteredCases.length} van{" "}
+                    {allFilteredCases.length} casussen
+                  </p>
+                )}
+              </div>
 
               <button
                 onClick={startPractice}
