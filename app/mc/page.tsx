@@ -2,6 +2,8 @@
 
 import { useMemo, useRef, useState } from "react";
 
+const FREE_QUESTION_LIMIT = 3;
+
 const subjects = [
   {
     name: "Strafrecht",
@@ -180,22 +182,19 @@ const questions = [
         id: "A",
         text: "Wegnemen met het oogmerk van wederrechtelijke toe-eigening",
         correct: true,
-        explanation:
-          "Juist. Dat is de kern van diefstal.",
+        explanation: "Juist. Dat is de kern van diefstal.",
       },
       {
         id: "B",
         text: "Een ogenblikkelijke wederrechtelijke aanranding",
         correct: false,
-        explanation:
-          "Onjuist. Dat hoort bij noodweer.",
+        explanation: "Onjuist. Dat hoort bij noodweer.",
       },
       {
         id: "C",
         text: "Een hevige gemoedsbeweging",
         correct: false,
-        explanation:
-          "Onjuist. Dat hoort eerder bij noodweerexces.",
+        explanation: "Onjuist. Dat hoort eerder bij noodweerexces.",
       },
     ],
   },
@@ -244,17 +243,16 @@ export default function McPage() {
 
   const subject = subjects.find((item) => item.slug === selectedSubject);
 
-  const filteredQuestions = useMemo(() => {
-    const matchingQuestions = questions.filter((question) => {
+  const allFilteredQuestions = useMemo(() => {
+    return questions.filter((question) => {
       return (
         question.subject === selectedSubject &&
         selectedTopics.includes(question.topic)
       );
     });
-
-    return matchingQuestions;
   }, [selectedSubject, selectedTopics]);
 
+  const filteredQuestions = allFilteredQuestions.slice(0, FREE_QUESTION_LIMIT);
   const question = filteredQuestions[currentQuestionIndex];
 
   const selected = question?.answers.find(
@@ -303,7 +301,7 @@ export default function McPage() {
       return;
     }
 
-    if (filteredQuestions.length === 0) {
+    if (allFilteredQuestions.length === 0) {
       alert("Voor deze selectie staan nog geen MC-vragen klaar.");
       return;
     }
@@ -372,7 +370,7 @@ export default function McPage() {
 
           <div className="mt-8 rounded-3xl border border-slate-800 bg-slate-900 p-8 text-center">
             <p className="text-sm font-semibold uppercase tracking-wide text-slate-400">
-              MC-vragen · Resultaat
+              MC-vragen · Gratis demo
             </p>
 
             <h1 className="mt-4 text-4xl font-bold">Je score</h1>
@@ -388,6 +386,26 @@ export default function McPage() {
                 ? "Netjes. Je zit op de goede weg, maar er zijn nog leerstukken die scherper kunnen."
                 : "Nog even dooroefenen. Lees vooral goed waarom de foute antwoorden niet kloppen."}
             </p>
+
+            {allFilteredQuestions.length > FREE_QUESTION_LIMIT && (
+              <div className="mt-8 rounded-2xl border border-yellow-700 bg-yellow-950/30 p-5 text-left">
+                <p className="font-semibold text-yellow-200">
+                  Je hebt de gratis demo afgerond
+                </p>
+                <p className="mt-2 text-sm leading-6 text-yellow-100/80">
+                  Deze selectie bevat {allFilteredQuestions.length} vragen. In
+                  de gratis demo kreeg je er {FREE_QUESTION_LIMIT}. Upgrade naar
+                  een studentenabonnement voor onbeperkt oefenen.
+                </p>
+
+                <a
+                  href="/abonnementen"
+                  className="mt-4 inline-block rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-200"
+                >
+                  Bekijk studentenprijzen
+                </a>
+              </div>
+            )}
 
             <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
               <button
@@ -437,7 +455,8 @@ export default function McPage() {
                 className="h-full bg-white transition-all"
                 style={{
                   width: `${
-                    ((currentQuestionIndex + 1) / filteredQuestions.length) * 100
+                    ((currentQuestionIndex + 1) / filteredQuestions.length) *
+                    100
                   }%`,
                 }}
               />
@@ -516,6 +535,21 @@ export default function McPage() {
           ← Terug naar oefenvormen
         </a>
 
+        <div className="mt-8 rounded-2xl border border-yellow-700 bg-yellow-950/30 p-5">
+          <p className="font-semibold text-yellow-200">Gratis demo actief</p>
+          <p className="mt-2 text-sm leading-6 text-yellow-100/80">
+            Je kunt nu maximaal {FREE_QUESTION_LIMIT} MC-vragen per selectie
+            oefenen. Upgrade naar een studentenabonnement voor onbeperkt oefenen.
+          </p>
+
+          <a
+            href="/abonnementen"
+            className="mt-4 inline-block rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-200"
+          >
+            Bekijk studentenprijzen
+          </a>
+        </div>
+
         <section className="mt-10">
           <p className="text-sm font-semibold uppercase tracking-wide text-slate-400">
             MC-vragen oefenen
@@ -525,7 +559,8 @@ export default function McPage() {
 
           <p className="mt-5 max-w-3xl leading-8 text-slate-300">
             Kies eerst een rechtsgebied. Daarna selecteer je één of meerdere
-            leerstukken. Je krijgt alleen vragen die passen bij jouw selectie.
+            leerstukken. Je krijgt in de gratis demo een beperkte selectie van
+            vragen.
           </p>
         </section>
 
@@ -645,7 +680,8 @@ export default function McPage() {
 
                 {selectedTopics.length > 0 && (
                   <p className="mt-2 text-sm text-slate-500">
-                    Beschikbare vragen voor selectie: {filteredQuestions.length}
+                    Gratis beschikbaar: {filteredQuestions.length} van{" "}
+                    {allFilteredQuestions.length} vragen
                   </p>
                 )}
               </div>
