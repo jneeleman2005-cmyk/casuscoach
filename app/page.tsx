@@ -11,8 +11,8 @@ export default function Home() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-          Oefen strafrecht met MC-vragen, casussen en directe uitleg. Niet
-          alleen stampen, maar leren toepassen zoals op je tentamen.
+          Oefen rechten met MC-vragen, casussen en directe uitleg. Niet alleen
+          stampen, maar leren toepassen zoals op je tentamen.
         </p>
 
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -24,10 +24,10 @@ export default function Home() {
           </a>
 
           <a
-            href="#uitleg"
+            href="/abonnementen"
             className="rounded-xl border border-slate-700 px-6 py-3 font-semibold text-white transition hover:bg-slate-900"
           >
-            Hoe werkt het?
+            Bekijk abonnementen
           </a>
         </div>
       </section>
@@ -35,26 +35,26 @@ export default function Home() {
       <section id="uitleg" className="mx-auto max-w-5xl px-6 pb-24">
         <div className="grid gap-6 md:grid-cols-3">
           <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <h2 className="text-xl font-bold">1. Lees de casus</h2>
+            <h2 className="text-xl font-bold">1. Kies je oefenvorm</h2>
             <p className="mt-3 text-slate-300">
-              Je krijgt korte juridische situaties zoals je die ook op een
-              tentamen kunt tegenkomen.
+              Oefen met MC-vragen of los volledige casussen op volgens
+              PROC/IRAC.
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <h2 className="text-xl font-bold">2. Kies je antwoord</h2>
+            <h2 className="text-xl font-bold">2. Kies je rechtsgebied</h2>
             <p className="mt-3 text-slate-300">
-              Beantwoord MC-vragen en ontdek meteen of je juridisch juist
-              redeneert.
+              Selecteer bijvoorbeeld strafrecht, bestuursrecht, goederenrecht of
+              openbare orde recht.
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <h2 className="text-xl font-bold">3. Leer van uitleg</h2>
+            <h2 className="text-xl font-bold">3. Leer van feedback</h2>
             <p className="mt-3 text-slate-300">
-              Je ziet niet alleen het juiste antwoord, maar ook waarom de andere
-              opties fout zijn.
+              Je ziet direct uitleg bij MC-vragen en voorbeeldantwoorden bij
+              casussen.
             </p>
           </div>
         </div>
