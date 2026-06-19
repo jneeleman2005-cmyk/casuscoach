@@ -265,29 +265,29 @@ export default function CasusPage() {
 
   if (hasStarted && currentCase) {
     return (
-      <main className="min-h-screen bg-slate-950 px-6 py-10 text-white">
+      <main className="min-h-screen bg-slate-50 px-6 py-10 text-slate-950">
         <div className="mx-auto max-w-4xl">
           <button
             onClick={backToSelection}
-            className="text-sm text-slate-400 hover:text-white"
+            className="text-sm font-medium text-slate-500 hover:text-blue-700"
           >
             ← Terug naar selectie
           </button>
 
-          <section className="mt-8 rounded-3xl border border-slate-800 bg-slate-900 p-8">
+          <section className="mt-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+              <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
                 {subject?.name} · {currentCase.topic}
               </p>
 
-              <p className="rounded-full border border-slate-700 px-4 py-2 text-sm text-slate-300">
+              <p className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-600">
                 Casus {currentCaseIndex + 1} van {filteredCases.length}
               </p>
             </div>
 
-            <div className="mt-6 h-2 overflow-hidden rounded-full bg-slate-800">
+            <div className="mt-6 h-2 overflow-hidden rounded-full bg-slate-200">
               <div
-                className="h-full bg-white transition-all"
+                className="h-full bg-blue-700 transition-all"
                 style={{
                   width: `${((currentCaseIndex + 1) / filteredCases.length) * 100}%`,
                 }}
@@ -296,12 +296,12 @@ export default function CasusPage() {
 
             <h1 className="mt-6 text-3xl font-bold">{currentCase.title}</h1>
 
-            <div className="mt-6 rounded-2xl border border-slate-700 bg-slate-950 p-6">
-              <p className="leading-8 text-slate-300">{currentCase.text}</p>
+            <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+              <p className="leading-8 text-slate-700">{currentCase.text}</p>
             </div>
 
             <div className="mt-6">
-              <label className="text-sm font-semibold text-slate-300">
+              <label className="text-sm font-semibold text-slate-700">
                 Jouw antwoord
               </label>
 
@@ -309,14 +309,14 @@ export default function CasusPage() {
                 value={answer}
                 onChange={(event) => setAnswer(event.target.value)}
                 placeholder="Werk je antwoord uit volgens PROC/IRAC: probleem/rechtsvraag, regel, toepassing en conclusie..."
-                className="mt-2 min-h-56 w-full rounded-2xl border border-slate-700 bg-slate-950 p-4 leading-7 text-white"
+                className="mt-2 min-h-56 w-full rounded-2xl border border-slate-300 bg-white p-4 leading-7 text-slate-950 shadow-sm outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
               />
             </div>
 
             {!submitted && (
               <button
                 onClick={submitAnswer}
-                className="mt-5 rounded-xl bg-white px-6 py-3 font-semibold text-slate-950 transition hover:bg-slate-200"
+                className="mt-5 rounded-xl bg-blue-700 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
               >
                 Lever antwoord in
               </button>
@@ -324,18 +324,18 @@ export default function CasusPage() {
 
             {submitted && (
               <section className="mt-8 space-y-6">
-                <div className="rounded-2xl border border-blue-700 bg-blue-950/30 p-6">
-                  <h2 className="text-2xl font-bold">
+                <div className="rounded-2xl border border-blue-200 bg-blue-50 p-6">
+                  <h2 className="text-2xl font-bold text-blue-950">
                     Feedback op jouw antwoord
                   </h2>
 
-                  <p className="mt-4 leading-8 text-slate-200">
+                  <p className="mt-4 leading-8 text-blue-950/80">
                     Dit is nu nog vaste demo-feedback. Straks koppelen we hier AI
                     aan. Dan beoordeelt het systeem je antwoord op rechtsvraag,
                     regel, toepassing en conclusie.
                   </p>
 
-                  <ul className="mt-4 list-disc space-y-2 pl-5 text-slate-300">
+                  <ul className="mt-4 list-disc space-y-2 pl-5 text-blue-950/80">
                     <li>Begin met een duidelijke rechtsvraag.</li>
                     <li>Noem de juiste rechtsregel of toetsingsmaatstaf.</li>
                     <li>Pas de regel concreet toe op de feiten.</li>
@@ -343,21 +343,23 @@ export default function CasusPage() {
                   </ul>
                 </div>
 
-                <div className="rounded-2xl border border-green-700 bg-green-950/30 p-6">
-                  <h2 className="text-2xl font-bold">Voorbeeldantwoord</h2>
+                <div className="rounded-2xl border border-green-200 bg-green-50 p-6">
+                  <h2 className="text-2xl font-bold text-green-950">
+                    Voorbeeldantwoord
+                  </h2>
 
-                  <p className="mt-4 leading-8 text-slate-200">
+                  <p className="mt-4 leading-8 text-green-950/80">
                     {currentCase.modelAnswer}
                   </p>
                 </div>
 
                 {allFilteredCases.length > FREE_CASE_LIMIT && (
-                  <div className="rounded-2xl border border-yellow-700 bg-yellow-950/30 p-6">
-                    <h2 className="text-2xl font-bold text-yellow-100">
+                  <div className="rounded-2xl border border-blue-200 bg-blue-50 p-6">
+                    <h2 className="text-2xl font-bold text-blue-950">
                       Gratis demo afgerond
                     </h2>
 
-                    <p className="mt-4 leading-8 text-yellow-100/80">
+                    <p className="mt-4 leading-8 text-blue-950/80">
                       Deze selectie bevat {allFilteredCases.length} casussen. In
                       de gratis demo kreeg je er {FREE_CASE_LIMIT}. Upgrade naar
                       een studentenabonnement voor onbeperkt casussen oefenen.
@@ -365,7 +367,7 @@ export default function CasusPage() {
 
                     <a
                       href="/abonnementen"
-                      className="mt-5 inline-block rounded-xl bg-white px-5 py-3 font-semibold text-slate-950 transition hover:bg-slate-200"
+                      className="mt-5 inline-block rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
                     >
                       Bekijk studentenprijzen
                     </a>
@@ -374,7 +376,7 @@ export default function CasusPage() {
 
                 <button
                   onClick={nextCase}
-                  className="rounded-xl bg-white px-6 py-3 font-semibold text-slate-950 transition hover:bg-slate-200"
+                  className="rounded-xl bg-blue-700 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
                 >
                   {currentCaseIndex + 1 >= filteredCases.length
                     ? "Terug naar selectie"
@@ -389,35 +391,38 @@ export default function CasusPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 px-6 py-10 text-white">
+    <main className="min-h-screen bg-slate-50 px-6 py-10 text-slate-950">
       <div className="mx-auto max-w-5xl">
-        <a href="/oefenen" className="text-sm text-slate-400 hover:text-white">
+        <a
+          href="/oefenen"
+          className="text-sm font-medium text-slate-500 hover:text-blue-700"
+        >
           ← Terug naar oefenvormen
         </a>
 
-        <div className="mt-8 rounded-2xl border border-yellow-700 bg-yellow-950/30 p-5">
-          <p className="font-semibold text-yellow-200">Gratis demo actief</p>
-          <p className="mt-2 text-sm leading-6 text-yellow-100/80">
+        <div className="mt-8 rounded-2xl border border-blue-200 bg-blue-50 p-5">
+          <p className="font-semibold text-blue-800">Gratis proberen</p>
+          <p className="mt-2 text-sm leading-6 text-blue-900/80">
             Je kunt nu maximaal {FREE_CASE_LIMIT} casus per selectie oefenen.
             Upgrade naar een studentenabonnement voor onbeperkt casussen oefenen.
           </p>
 
           <a
             href="/abonnementen"
-            className="mt-4 inline-block rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-200"
+            className="mt-4 inline-block rounded-xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-800"
           >
             Bekijk studentenprijzen
           </a>
         </div>
 
         <section className="mt-10">
-          <p className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+          <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
             Casus oplossen
           </p>
 
           <h1 className="mt-4 text-4xl font-bold">Kies je rechtsgebied</h1>
 
-          <p className="mt-5 max-w-3xl leading-8 text-slate-300">
+          <p className="mt-5 max-w-3xl leading-8 text-slate-600">
             Kies eerst een rechtsgebied. Daarna selecteer je één of meerdere
             leerstukken die je wilt oefenen. Je krijgt in de gratis demo een
             beperkte selectie van casussen.
@@ -432,23 +437,23 @@ export default function CasusPage() {
               <button
                 key={item.slug}
                 onClick={() => selectSubject(item.slug)}
-                className={`rounded-3xl border p-6 text-left transition ${
+                className={`rounded-3xl border p-6 text-left shadow-sm transition ${
                   isSelected
-                    ? "border-white bg-slate-800"
-                    : "border-slate-800 bg-slate-900 hover:border-white hover:bg-slate-800"
+                    ? "border-blue-400 bg-blue-50"
+                    : "border-slate-200 bg-white hover:border-blue-300 hover:shadow-md"
                 }`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h2 className="text-2xl font-bold">{item.name}</h2>
 
-                    <p className="mt-3 text-slate-300">
+                    <p className="mt-3 text-slate-600">
                       Oefen casussen per leerstuk of met een combinatie van
                       meerdere leerstukken.
                     </p>
                   </div>
 
-                  <span className="rounded-full bg-green-950 px-3 py-1 text-xs font-semibold text-green-300">
+                  <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700 ring-1 ring-green-200">
                     Beschikbaar
                   </span>
                 </div>
@@ -457,7 +462,7 @@ export default function CasusPage() {
                   {item.topics.map((topic) => (
                     <span
                       key={topic}
-                      className="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300"
+                      className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-600"
                     >
                       {topic}
                     </span>
@@ -471,11 +476,11 @@ export default function CasusPage() {
         {subject && (
           <section
             ref={topicsSectionRef}
-            className="mt-8 rounded-3xl border border-slate-800 bg-slate-900 p-8"
+            className="mt-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
           >
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+                <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
                   Leerstukken
                 </p>
 
@@ -485,14 +490,14 @@ export default function CasusPage() {
               <div className="flex gap-3">
                 <button
                   onClick={selectAllTopics}
-                  className="rounded-xl border border-slate-700 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+                  className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-100"
                 >
                   Selecteer alles
                 </button>
 
                 <button
                   onClick={clearTopics}
-                  className="rounded-xl border border-slate-700 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+                  className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-100"
                 >
                   Wis selectie
                 </button>
@@ -509,8 +514,8 @@ export default function CasusPage() {
                     onClick={() => toggleTopic(topic)}
                     className={`rounded-2xl border p-4 text-left transition ${
                       isSelected
-                        ? "border-white bg-slate-800"
-                        : "border-slate-700 bg-slate-950 hover:bg-slate-800"
+                        ? "border-blue-400 bg-blue-50"
+                        : "border-slate-200 bg-white hover:border-blue-300 hover:bg-blue-50"
                     }`}
                   >
                     <div className="flex items-center justify-between gap-4">
@@ -519,8 +524,8 @@ export default function CasusPage() {
                       <span
                         className={`rounded-full px-3 py-1 text-xs font-semibold ${
                           isSelected
-                            ? "bg-white text-slate-950"
-                            : "bg-slate-900 text-slate-400"
+                            ? "bg-blue-700 text-white"
+                            : "bg-slate-100 text-slate-500"
                         }`}
                       >
                         {isSelected ? "Geselecteerd" : "Kies"}
@@ -533,7 +538,7 @@ export default function CasusPage() {
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-sm text-slate-400">
+                <p className="text-sm text-slate-500">
                   Geselecteerd: {selectedTopics.length} leerstuk
                   {selectedTopics.length === 1 ? "" : "ken"}
                 </p>
@@ -548,7 +553,7 @@ export default function CasusPage() {
 
               <button
                 onClick={startPractice}
-                className="rounded-xl bg-white px-6 py-3 font-semibold text-slate-950 transition hover:bg-slate-200"
+                className="rounded-xl bg-blue-700 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
               >
                 Start casus oefenen
               </button>
