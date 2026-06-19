@@ -1,3 +1,5 @@
+import { createClient } from "../lib/supabase/server";
+
 const progressItems = [
   {
     subject: "Strafrecht",
@@ -16,7 +18,64 @@ const progressItems = [
   },
 ];
 
-export default function AccountPage() {
+export default async function AccountPage() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return (
+      <main className="min-h-screen bg-slate-50 px-6 py-10 text-slate-950">
+        <div className="mx-auto max-w-4xl">
+          <a
+            href="/"
+            className="text-sm font-medium text-slate-500 hover:text-blue-700"
+          >
+            ← Terug naar home
+          </a>
+
+          <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+            <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
+              Mijn account
+            </p>
+
+            <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
+              Je bent nog niet ingelogd.
+            </h1>
+
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+              Log in of maak een account aan om je persoonlijke omgeving te
+              bekijken.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="/login"
+                className="rounded-xl bg-blue-700 px-5 py-3 text-center font-semibold text-white shadow-sm transition hover:bg-blue-800"
+              >
+                Inloggen
+              </a>
+
+              <a
+                href="/registreren"
+                className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-center font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-700"
+              >
+                Account maken
+              </a>
+            </div>
+          </section>
+        </div>
+      </main>
+    );
+  }
+
+  const displayName =
+    typeof user.user_metadata?.name === "string"
+      ? user.user_metadata.name
+      : "Student";
+
   return (
     <main className="min-h-screen bg-slate-50 px-6 py-10 text-slate-950">
       <div className="mx-auto max-w-6xl">
@@ -33,13 +92,13 @@ export default function AccountPage() {
           </p>
 
           <h1 className="mt-4 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl">
-            Je persoonlijke oefenomgeving.
+            Welkom terug, {displayName}.
           </h1>
 
           <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
-            Deze accountpagina is alvast voorbereid. Later worden hier echte
-            gebruikersgegevens, voortgang en Premium-status geladen.
-          </p>
+  Je persoonlijke oefenomgeving is actief. Later worden hier je echte
+  voortgang, Premium-status en oefenresultaten geladen.
+</p>
         </section>
 
         <section className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.8fr]">
@@ -49,16 +108,37 @@ export default function AccountPage() {
                 <h2 className="text-2xl font-bold">Overzicht</h2>
 
                 <p className="mt-3 leading-7 text-slate-600">
-                  Je bent nog niet echt ingelogd. Deze pagina laat zien hoe het
-                  accountdashboard er straks uit kan zien.
+                  Je account is gekoppeld aan Supabase Auth. De volgende stap is
+                  voortgang en Premium-status opslaan in de database.
                 </p>
               </div>
 
-              <span className="w-fit rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-600">
-                Demo-account
+              <span className="w-fit rounded-full border border-green-200 bg-green-50 px-4 py-2 text-sm font-semibold text-green-700">
+                Ingelogd
               </span>
             </div>
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <a
+    href="/account/gegevens"
+    className="rounded-xl bg-blue-700 px-5 py-3 text-center font-semibold text-white shadow-sm transition hover:bg-blue-800"
+  >
+    Accountgegevens bekijken
+  </a>
 
+  <a
+    href="/oefenen"
+    className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-center font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-700"
+  >
+    Verder oefenen
+  </a>
+
+  <a
+    href="/auth/logout"
+    className="rounded-xl border border-red-200 bg-red-50 px-5 py-3 text-center font-semibold text-red-700 shadow-sm transition hover:border-red-300 hover:bg-red-100"
+  >
+    Uitloggen
+  </a>
+</div>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
                 <p className="text-sm text-slate-500">Geoefende vragen</p>
@@ -131,13 +211,12 @@ export default function AccountPage() {
 
         <section className="mt-8 rounded-3xl border border-blue-200 bg-blue-50 p-8">
           <h2 className="text-2xl font-bold text-blue-950">
-            Accountfunctie nog niet actief
+            Account werkt nu met Supabase
           </h2>
 
           <p className="mt-4 max-w-3xl leading-8 text-blue-950/80">
-            De pagina staat klaar, maar echte gebruikersdata wordt nog niet
-            opgeslagen. De volgende technische stap is authenticatie koppelen en
-            daarna Premium-status en voortgang opslaan.
+            De gebruiker wordt nu opgehaald via Supabase Auth. De volgende stap
+            is een uitlogknop maken en daarna echte voortgang opslaan.
           </p>
         </section>
       </div>
