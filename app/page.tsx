@@ -17,10 +17,10 @@ export default function Home() {
 
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
           <a
-            href="/strafrecht"
+            href="/oefenen"
             className="rounded-xl bg-white px-6 py-3 font-semibold text-slate-950 transition hover:bg-slate-200"
           >
-            Start met strafrecht
+            Start met oefenen
           </a>
 
           <a
