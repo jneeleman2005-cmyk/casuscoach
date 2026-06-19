@@ -1,91 +1,9 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import { subjects } from "../data/subjects";
 
 const FREE_CASE_LIMIT = 1;
-
-const subjects = [
-  {
-    name: "Strafrecht",
-    slug: "strafrecht",
-    available: true,
-    topics: ["Poging", "Medeplegen", "Noodweer", "Opzet", "Diefstal"],
-  },
-  {
-    name: "Bestuursrecht",
-    slug: "bestuursrecht",
-    available: true,
-    topics: [
-      "Besluit",
-      "Belanghebbende",
-      "Bezwaar",
-      "Evenredigheid",
-      "Handhaving",
-    ],
-  },
-  {
-    name: "Europees recht",
-    slug: "europees-recht",
-    available: true,
-    topics: [
-      "Voorrang",
-      "Rechtstreekse werking",
-      "Vrij verkeer",
-      "EU-instellingen",
-    ],
-  },
-  {
-    name: "Internationaal recht",
-    slug: "internationaal-recht",
-    available: true,
-    topics: [
-      "Verdragen",
-      "Staatsaansprakelijkheid",
-      "Immuniteit",
-      "Mensenrechten",
-    ],
-  },
-  {
-    name: "Staatsrecht",
-    slug: "staatsrecht",
-    available: true,
-    topics: [
-      "Grondrechten",
-      "Trias politica",
-      "Wetgeving",
-      "Ministeriële verantwoordelijkheid",
-    ],
-  },
-  {
-    name: "Goederenrecht",
-    slug: "goederenrecht",
-    available: true,
-    topics: ["Eigendom", "Bezit", "Houderschap", "Overdracht"],
-  },
-  {
-    name: "Bedrijfsrecht",
-    slug: "bedrijfsrecht",
-    available: true,
-    topics: [
-      "BV",
-      "NV",
-      "Bestuurdersaansprakelijkheid",
-      "Vertegenwoordiging",
-    ],
-  },
-  {
-    name: "Openbare orde recht",
-    slug: "openbare-orde-recht",
-    available: true,
-    topics: [
-      "APV",
-      "Noodbevel",
-      "Noodverordening",
-      "Wet Damocles",
-      "Demonstratierecht",
-    ],
-  },
-];
 
 const cases = [
   {
@@ -447,10 +365,7 @@ export default function CasusPage() {
                   <div>
                     <h2 className="text-2xl font-bold">{item.name}</h2>
 
-                    <p className="mt-3 text-slate-600">
-                      Oefen casussen per leerstuk of met een combinatie van
-                      meerdere leerstukken.
-                    </p>
+                    <p className="mt-3 text-slate-600">{item.description}</p>
                   </div>
 
                   <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700 ring-1 ring-green-200">
