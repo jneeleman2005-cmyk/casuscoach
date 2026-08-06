@@ -284,7 +284,7 @@ export default async function AdminPage() {
               Voeg nieuwe oefenstof toe zonder in de database te hoeven werken.
             </p>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <a
                 href="/admin/vragen"
                 className="rounded-2xl border border-blue-200 bg-blue-50 p-6 transition hover:border-blue-300 hover:bg-blue-100"
@@ -309,6 +309,18 @@ export default async function AdminPage() {
 
                 <p className="mt-3 text-sm leading-6 text-green-950/80">
                   Voeg casustekst, modelantwoord en beoordelingspunten toe.
+                </p>
+              </a>
+              <a
+                href="/admin/beheer"
+                className="rounded-2xl border border-slate-200 bg-slate-50 p-6 transition hover:border-slate-300 hover:bg-slate-100"
+              >
+                <p className="text-lg font-bold text-slate-950">
+                  Content beheren
+                </p>
+
+                <p className="mt-3 text-sm leading-6 text-slate-600">
+                  Bekijk, bewerk of verwijder bestaande MC-vragen en casussen.
                 </p>
               </a>
             </div>
