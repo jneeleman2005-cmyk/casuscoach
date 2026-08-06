@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { createClient } from "../../lib/supabase/client";
@@ -20,6 +20,12 @@ type Topic = {
   sort_order: number;
 };
 
+type ContentItem = {
+  id: string;
+  subject_id: string;
+  topic_id: string | null;
+};
+
 function makeSlug(value: string) {
   return value
     .toLowerCase()
@@ -35,6 +41,8 @@ export default function AdminCategorieenPage() {
 
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [topics, setTopics] = useState<Topic[]>([]);
+  const [mcItems, setMcItems] = useState<ContentItem[]>([]);
+  const [caseItems, setCaseItems] = useState<ContentItem[]>([]);
 
   const [subjectName, setSubjectName] = useState("");
   const [topicName, setTopicName] = useState("");
@@ -52,12 +60,35 @@ export default function AdminCategorieenPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  function getSubjectCounts(subjectId: string) {
+    const mcCount = mcItems.filter((item) => item.subject_id === subjectId).length;
+    const caseCount = caseItems.filter((item) => item.subject_id === subjectId).length;
+
+    return {
+      mcCount,
+      caseCount,
+      total: mcCount + caseCount,
+    };
+  }
+
+  function getTopicCounts(topicId: string) {
+    const mcCount = mcItems.filter((item) => item.topic_id === topicId).length;
+    const caseCount = caseItems.filter((item) => item.topic_id === topicId).length;
+
+    return {
+      mcCount,
+      caseCount,
+      total: mcCount + caseCount,
+    };
+  }
+
   const topicsBySubject = useMemo(() => {
     return subjects.map((subject) => ({
       subject,
+      counts: getSubjectCounts(subject.id),
       topics: topics.filter((topic) => topic.subject_id === subject.id),
     }));
-  }, [subjects, topics]);
+  }, [subjects, topics, mcItems, caseItems]);
 
   async function loadData() {
     setLoading(true);
@@ -81,8 +112,22 @@ export default function AdminCategorieenPage() {
       .order("sort_order", { ascending: true })
       .order("name", { ascending: true });
 
+    const { data: mcData, error: mcError } = await supabase
+      .from("mc_questions")
+      .select("id, subject_id, topic_id");
+
+    const { data: casesData, error: casesError } = await supabase
+      .from("open_cases")
+      .select("id, subject_id, topic_id");
+
     if (topicsError) {
       setError("Subcategorieen konden niet worden geladen.");
+      setLoading(false);
+      return;
+    }
+
+    if (mcError || casesError) {
+      setError("Aantallen konden niet worden geladen.");
       setLoading(false);
       return;
     }
@@ -90,6 +135,8 @@ export default function AdminCategorieenPage() {
     const loadedSubjects = (subjectsData ?? []) as Subject[];
     setSubjects(loadedSubjects);
     setTopics((topicsData ?? []) as Topic[]);
+    setMcItems((mcData ?? []) as ContentItem[]);
+    setCaseItems((casesData ?? []) as ContentItem[]);
 
     if (!topicSubjectId && loadedSubjects.length > 0) {
       setTopicSubjectId(loadedSubjects[0].id);
@@ -515,7 +562,7 @@ export default function AdminCategorieenPage() {
           ) : null}
 
           <div className="space-y-4">
-            {topicsBySubject.map(({ subject, topics }) => (
+            {topicsBySubject.map(({ subject, counts, topics }) => (
               <article
                 key={subject.id}
                 className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50"
@@ -548,6 +595,18 @@ export default function AdminCategorieenPage() {
                         <p className="mt-1 text-xs font-semibold text-slate-500">
                           {subject.slug}
                         </p>
+
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700">
+                            {counts.total} totaal
+                          </span>
+                          <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
+                            {counts.mcCount} MC
+                          </span>
+                          <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-bold text-green-700">
+                            {counts.caseCount} casussen
+                          </span>
+                        </div>
                       </>
                     )}
                   </div>
@@ -595,7 +654,10 @@ export default function AdminCategorieenPage() {
                     </p>
                   ) : (
                     <div className="grid gap-3">
-                      {topics.map((topic) => (
+                      {topics.map((topic) => {
+                        const topicCounts = getTopicCounts(topic.id);
+
+                        return (
                         <div
                           key={topic.id}
                           className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 md:flex-row md:items-center md:justify-between"
@@ -627,6 +689,18 @@ export default function AdminCategorieenPage() {
                                 <p className="mt-1 text-xs font-semibold text-slate-500">
                                   {topic.slug}
                                 </p>
+
+                                <div className="mt-3 flex flex-wrap gap-2">
+                                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700">
+                                    {topicCounts.total} totaal
+                                  </span>
+                                  <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
+                                    {topicCounts.mcCount} MC
+                                  </span>
+                                  <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-bold text-green-700">
+                                    {topicCounts.caseCount} casussen
+                                  </span>
+                                </div>
                               </>
                             )}
                           </div>
@@ -668,7 +742,8 @@ export default function AdminCategorieenPage() {
                             </button>
                           </div>
                         </div>
-                      ))}
+                      );
+                      })}
                     </div>
                   )}
                 </div>

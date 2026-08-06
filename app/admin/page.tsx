@@ -283,7 +283,7 @@ export default async function AdminPage() {
     Voeg oefenstof toe, beheer bestaande content en bekijk meldingen van studenten.
   </p>
 
-  <div className="mt-8 grid gap-4 md:grid-cols-2">
+  <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
     <a
       href="/admin/vragen"
       className="block rounded-2xl border border-blue-200 bg-blue-50 p-6 transition hover:border-blue-300 hover:bg-blue-100"
@@ -320,6 +320,19 @@ export default async function AdminPage() {
 
       <p className="mt-3 text-sm leading-6 text-slate-600">
         Bekijk, bewerk of verwijder bestaande MC-vragen en casussen.
+      </p>
+    </a>
+
+    <a
+      href="/admin/categorieen"
+      className="block rounded-2xl border border-purple-200 bg-purple-50 p-6 transition hover:border-purple-300 hover:bg-purple-100"
+    >
+      <p className="text-lg font-bold text-purple-950">
+        Categorieen beheren
+      </p>
+
+      <p className="mt-3 text-sm leading-6 text-purple-950/80">
+        Voeg rechtsgebieden en subcategorieen toe en bekijk hoeveel vragen en casussen eraan gekoppeld zijn.
       </p>
     </a>
 
