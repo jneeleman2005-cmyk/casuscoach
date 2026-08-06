@@ -114,7 +114,7 @@ export default async function AccountPage() {
             href="/"
             className="text-sm font-medium text-slate-500 hover:text-blue-700"
           >
-            â† Terug naar home
+        Terug naar home
           </a>
 
           <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -319,7 +319,7 @@ export default async function AccountPage() {
           href="/"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          â† Terug naar home
+        Terug naar home
         </a>
 
         <section className="mt-10 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
@@ -517,7 +517,7 @@ export default async function AccountPage() {
                   </p>
                   <p className="mt-2 text-lg font-bold">
                     {bestScoreSubject
-                      ? `${bestScoreSubject.subjectName} Â· ${bestScoreSubject.mcScore}%`
+                      ? `${bestScoreSubject.subjectName} - ${bestScoreSubject.mcScore}%`
                       : "Nog geen MC-score"}
                   </p>
                 </div>
@@ -541,7 +541,7 @@ export default async function AccountPage() {
               <h2 className="text-2xl font-bold">Recente activiteit</h2>
 
               <p className="mt-3 leading-7 text-slate-600">
-                Je laatste opgeslagen oefeningen in Ã©Ã©n overzicht.
+                Je laatste opgeslagen oefeningen in een overzicht.
               </p>
             </div>
 

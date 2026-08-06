@@ -10,7 +10,7 @@ export default async function OefenenPage() {
           href="/"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          Terug naar home
+        Terug naar home
         </a>
 
         <section className="mt-10">

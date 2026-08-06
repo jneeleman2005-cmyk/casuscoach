@@ -153,7 +153,7 @@ export default function AdminVragenPage() {
           href="/account"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          ← Terug naar account
+        Terug naar account
         </a>
 
         <section className="mt-10">

@@ -11,7 +11,7 @@ export default async function AbonnementenPage() {
             href="/"
             className="text-sm font-medium text-slate-500 hover:text-blue-700"
           >
-            Terug naar home
+        Terug naar home
           </a>
 
           <section className="mt-10 rounded-3xl border border-green-200 bg-green-50 p-8">
@@ -85,7 +85,7 @@ export default async function AbonnementenPage() {
           href="/"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          Terug naar home
+        Terug naar home
         </a>
 
         <section className="mt-10">

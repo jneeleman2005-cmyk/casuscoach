@@ -6,7 +6,7 @@ export default function DisclaimerPage() {
           href="/"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          ← Terug naar home
+        Terug naar home
         </a>
 
         <section className="mt-10">
@@ -42,7 +42,7 @@ export default function DisclaimerPage() {
 
             <p className="mt-4 leading-8 text-slate-600">
               CasusCoach vervangt geen colleges, werkgroepen, literatuur,
-              docentfeedback, tentameninstructies of officiële studiematerialen.
+              docentfeedback, tentameninstructies of officile studiematerialen.
               Gebruik CasusCoach als extra oefenomgeving naast je opleiding.
             </p>
           </article>
@@ -54,7 +54,7 @@ export default function DisclaimerPage() {
               We doen ons best om de inhoud duidelijk en zorgvuldig op te
               stellen. Toch kan informatie onvolledig, verouderd of onjuist
               zijn. Controleer belangrijke juridische informatie altijd met je
-              studieboek, wettenbundel, docent of andere officiële bron.
+              studieboek, wettenbundel, docent of andere officile bron.
             </p>
           </article>
 

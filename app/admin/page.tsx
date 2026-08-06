@@ -64,7 +64,7 @@ export default async function AdminPage() {
             href="/"
             className="text-sm font-medium text-slate-500 hover:text-blue-700"
           >
-            ← Terug naar home
+        Terug naar home
           </a>
 
           <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -106,7 +106,7 @@ export default async function AdminPage() {
             href="/account"
             className="text-sm font-medium text-slate-500 hover:text-blue-700"
           >
-            ← Terug naar account
+        Terug naar account
           </a>
 
           <section className="mt-10 rounded-3xl border border-red-200 bg-red-50 p-8">
@@ -127,7 +127,7 @@ export default async function AdminPage() {
               href="/account"
               className="mt-8 inline-block rounded-xl bg-red-700 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-red-800"
             >
-              Terug naar account
+        Terug naar account
             </a>
           </section>
         </div>
@@ -191,7 +191,7 @@ export default async function AdminPage() {
           href="/account"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          ← Terug naar account
+        Terug naar account
         </a>
 
         <section className="mt-10 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
@@ -386,7 +386,7 @@ export default async function AdminPage() {
                           </p>
 
                           <p className="mt-1 text-xs text-slate-500">
-                            {getRelationName(question.topics)} ·{" "}
+                            {getRelationName(question.topics)} {" "}
                             {formatDate(question.created_at)}
                           </p>
                         </td>
@@ -440,7 +440,7 @@ export default async function AdminPage() {
                           </p>
 
                           <p className="mt-1 text-xs text-slate-500">
-                            {getRelationName(openCase.topics)} ·{" "}
+                            {getRelationName(openCase.topics)} {" "}
                             {formatDate(openCase.created_at)}
                           </p>
                         </td>

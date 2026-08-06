@@ -3,7 +3,7 @@ export default function NotFound() {
     <main className="min-h-screen bg-slate-50 px-6 py-20 text-slate-950">
       <section className="mx-auto max-w-3xl text-center">
         <p className="mx-auto w-fit rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700">
-          404 · Pagina niet gevonden
+          404  Pagina niet gevonden
         </p>
 
         <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
@@ -20,7 +20,7 @@ export default function NotFound() {
             href="/"
             className="inline-block rounded-xl bg-blue-700 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
           >
-            Terug naar home
+        Terug naar home
           </a>
         </div>
       </section>

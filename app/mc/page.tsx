@@ -220,7 +220,7 @@ export default function McPage() {
           href="/oefenen"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          Ã¢â€ Â Terug naar oefenen
+        Terug naar oefenen
         </a>
 
         <section className="mt-10">

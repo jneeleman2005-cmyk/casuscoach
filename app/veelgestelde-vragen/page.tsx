@@ -27,7 +27,7 @@ const faqs = [
   {
     question: "Kan ik per leerstuk oefenen?",
     answer:
-      "Ja. Je kiest eerst een rechtsgebied en daarna ÃƒÂ©ÃƒÂ©n of meerdere leerstukken. Zo kun je gericht oefenen of juist leerstukken combineren.",
+      "Ja. Je kiest eerst een rechtsgebied en daarna n of meerdere leerstukken. Zo kun je gericht oefenen of juist leerstukken combineren.",
   },
   {
     question: "Werkt CasusCoach ook op telefoon?",
@@ -49,7 +49,7 @@ export default function VeelgesteldeVragenPage() {
           href="/"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          Ã¢â€ Â Terug naar home
+        Terug naar home
         </a>
 
         <section className="mt-10">

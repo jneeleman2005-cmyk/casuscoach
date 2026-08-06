@@ -15,7 +15,7 @@ export default async function AccountGegevensPage() {
             href="/account"
             className="text-sm font-medium text-slate-500 hover:text-blue-700"
           >
-            Ã¢â€ Â Terug naar account
+        Terug naar account
           </a>
 
           <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -55,7 +55,7 @@ export default async function AccountGegevensPage() {
           href="/account"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          Ã¢â€ Â Terug naar account
+        Terug naar account
         </a>
 
         <section className="mt-10">

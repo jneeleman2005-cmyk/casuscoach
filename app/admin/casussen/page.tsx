@@ -147,7 +147,7 @@ export default function AdminCasussenPage() {
           href="/account"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          ← Terug naar account
+        Terug naar account
         </a>
 
         <section className="mt-10">
@@ -228,7 +228,7 @@ export default function AdminCasussenPage() {
                   id="title"
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
-                  placeholder="Bijvoorbeeld: Casus over ministeriële verantwoordelijkheid"
+                  placeholder="Bijvoorbeeld: Casus over ministerile verantwoordelijkheid"
                   className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
                 />
               </div>

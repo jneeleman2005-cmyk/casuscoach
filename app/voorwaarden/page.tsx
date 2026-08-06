@@ -6,7 +6,7 @@ export default function VoorwaardenPage() {
           href="/"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          Ã¢â€ Â Terug naar home
+        Terug naar home
         </a>
 
         <section className="mt-10">
@@ -99,7 +99,7 @@ export default function VoorwaardenPage() {
             <p className="mt-4 leading-8 text-slate-600">
               Je mag CasusCoach gebruiken voor normale studiedoeleinden. Het is
               niet toegestaan het platform te misbruiken, beveiliging te
-              omzeilen, geautomatiseerd grote hoeveelheden content te kopiÃƒÂ«ren
+              omzeilen, geautomatiseerd grote hoeveelheden content te kopiren
               of content te gebruiken op een manier die schadelijk is voor
               CasusCoach of andere gebruikers.
             </p>

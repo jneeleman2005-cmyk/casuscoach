@@ -3,7 +3,7 @@ export default function OverPage() {
     <main className="min-h-screen bg-slate-50 px-6 py-10 text-slate-950">
       <div className="mx-auto max-w-5xl">
         <a href="/" className="text-sm font-medium text-slate-500 hover:text-blue-700">
-          ← Terug naar home
+        Terug naar home
         </a>
 
         <section className="mt-10">
@@ -97,10 +97,10 @@ export default function OverPage() {
               </p>
 
               <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-600">
-                <li>✓ MC-vragen met directe uitleg</li>
-                <li>✓ Casussen met voorbeeldantwoord</li>
-                <li>✓ Rechtsgebieden en leerstukken</li>
-                <li>✓ Later: AI-feedback op casusantwoorden</li>
+                <li> MC-vragen met directe uitleg</li>
+                <li> Casussen met voorbeeldantwoord</li>
+                <li> Rechtsgebieden en leerstukken</li>
+                <li> Later: AI-feedback op casusantwoorden</li>
               </ul>
             </div>
           </div>

@@ -18,9 +18,9 @@ export default function MobileMenu({ isFreeMode }: MobileMenuProps) {
         className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-700"
       >
         {open ? (
-          <span className="text-2xl leading-none">×</span>
+          <span className="text-2xl leading-none"></span>
         ) : (
-          <span className="text-2xl leading-none">☰</span>
+          <span className="text-2xl leading-none"></span>
         )}
       </button>
 
