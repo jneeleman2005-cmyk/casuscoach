@@ -1,3 +1,4 @@
+import MobileMenu from "./Mobilemenu";
 import Logo from "./logo";
 import { createClient } from "../lib/supabase/server";
 
