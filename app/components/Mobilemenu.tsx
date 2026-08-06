@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 
-export default function MobileMenu() {
+type MobileMenuProps = {
+  isFreeMode: boolean;
+};
+
+export default function MobileMenu({ isFreeMode }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -39,9 +43,11 @@ export default function MobileMenu() {
               Casussen
             </a>
 
-            <a href="/abonnementen" className="hover:text-blue-700">
-              Abonnementen
-            </a>
+            {!isFreeMode ? (
+              <a href="/abonnementen" className="hover:text-blue-700">
+                Abonnementen
+              </a>
+            ) : null}
 
             <a href="/veelgestelde-vragen" className="hover:text-blue-700">
               FAQ

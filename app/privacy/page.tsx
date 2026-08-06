@@ -6,7 +6,7 @@ export default function PrivacyPage() {
           href="/"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          ← Terug naar home
+          â† Terug naar home
         </a>
 
         <section className="mt-10">
@@ -32,9 +32,9 @@ export default function PrivacyPage() {
 
             <p className="mt-4 leading-8 text-slate-600">
               In de huidige versie kun je CasusCoach gebruiken zonder account.
-              Zodra functies zoals registratie, inloggen, abonnementen,
+              Zodra functies zoals registratie, inloggen, toegang,
               betalingen of AI-feedback worden toegevoegd, kunnen gegevens
-              worden verwerkt zoals naam, e-mailadres, abonnementsstatus,
+              worden verwerkt zoals naam, e-mailadres, toegangsstatus,
               betaalinformatie, oefenresultaten en ingevulde antwoorden.
             </p>
           </article>
@@ -44,7 +44,7 @@ export default function PrivacyPage() {
 
             <p className="mt-4 leading-8 text-slate-600">
               Gegevens kunnen worden gebruikt om het platform te laten werken,
-              gebruikers toegang te geven tot gratis of premiumfuncties,
+              gebruikers toegang te geven tot gratis of platformfuncties,
               betalingen te verwerken, voortgang bij te houden, feedback te
               geven en CasusCoach technisch te verbeteren.
             </p>
@@ -55,7 +55,7 @@ export default function PrivacyPage() {
 
             <p className="mt-4 leading-8 text-slate-600">
               Betalingen zijn op dit moment nog niet gekoppeld. Als CasusCoach
-              later betaalde abonnementen aanbiedt, kan gebruik worden gemaakt
+              later betaalde toegang aanbiedt, kan gebruik worden gemaakt
               van een externe betaaldienst zoals Stripe of Mollie. CasusCoach
               slaat dan zelf geen volledige betaalkaartgegevens op.
             </p>
@@ -78,7 +78,7 @@ export default function PrivacyPage() {
             <p className="mt-4 leading-8 text-slate-600">
               CasusCoach kan technische gegevens gebruiken die nodig zijn om de
               website goed te laten werken, zoals browserinformatie, apparaat,
-              foutmeldingen en gebruik van pagina’s. Als later analytische of
+              foutmeldingen en gebruik van paginaâ€™s. Als later analytische of
               marketingcookies worden gebruikt, wordt deze privacyverklaring
               daarop aangepast.
             </p>
@@ -112,7 +112,7 @@ export default function PrivacyPage() {
               Gebruikers kunnen later verzoeken om inzage, correctie,
               verwijdering of beperking van hun persoonsgegevens. Zodra
               gebruikersaccounts en contactgegevens definitief zijn ingericht,
-              wordt hier uitgelegd hoe zo’n verzoek kan worden ingediend.
+              wordt hier uitgelegd hoe zoâ€™n verzoek kan worden ingediend.
             </p>
           </article>
 

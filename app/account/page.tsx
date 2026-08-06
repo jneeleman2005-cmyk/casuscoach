@@ -114,7 +114,7 @@ export default async function AccountPage() {
             href="/"
             className="text-sm font-medium text-slate-500 hover:text-blue-700"
           >
-            ← Terug naar home
+            â† Terug naar home
           </a>
 
           <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -319,7 +319,7 @@ export default async function AccountPage() {
           href="/"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          ← Terug naar home
+          â† Terug naar home
         </a>
 
         <section className="mt-10 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
@@ -476,23 +476,23 @@ export default async function AccountPage() {
           <aside className="space-y-6">
             <div className="rounded-3xl border border-green-200 bg-green-50 p-8">
               <p className="text-sm font-semibold uppercase tracking-wide text-green-700">
-                Premium
+                Gratis toegang
               </p>
 
               <h2 className="mt-3 text-2xl font-bold text-green-950">
-                Nog geen Premium actief
+                Volledige toegang actief
               </h2>
 
               <p className="mt-4 leading-7 text-green-950/80">
                 Later wordt hier automatisch getoond of je een actief
-                abonnement hebt. Met Premium kun je onbeperkt oefenen.
+                toegang hebt. Met Gratis toegang kun je onbeperkt oefenen.
               </p>
 
               <a
-                href="/abonnementen"
+                href="/oefenen"
                 className="mt-6 inline-block rounded-xl bg-green-700 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-green-800"
               >
-                Bekijk abonnementen
+                Start met oefenen
               </a>
             </div>
 
@@ -517,7 +517,7 @@ export default async function AccountPage() {
                   </p>
                   <p className="mt-2 text-lg font-bold">
                     {bestScoreSubject
-                      ? `${bestScoreSubject.subjectName} · ${bestScoreSubject.mcScore}%`
+                      ? `${bestScoreSubject.subjectName} Â· ${bestScoreSubject.mcScore}%`
                       : "Nog geen MC-score"}
                   </p>
                 </div>
@@ -541,7 +541,7 @@ export default async function AccountPage() {
               <h2 className="text-2xl font-bold">Recente activiteit</h2>
 
               <p className="mt-3 leading-7 text-slate-600">
-                Je laatste opgeslagen oefeningen in één overzicht.
+                Je laatste opgeslagen oefeningen in Ã©Ã©n overzicht.
               </p>
             </div>
 

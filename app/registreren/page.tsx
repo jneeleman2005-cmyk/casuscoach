@@ -54,7 +54,7 @@ export default function RegistrerenPage() {
             href="/"
             className="text-sm font-medium text-slate-500 hover:text-blue-700"
           >
-            ← Terug naar home
+            â† Terug naar home
           </a>
 
           <p className="mt-12 text-sm font-semibold uppercase tracking-wide text-blue-700">
@@ -67,7 +67,7 @@ export default function RegistrerenPage() {
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
             Met een account kan CasusCoach later je voortgang bewaren,
-            Premium-toegang controleren en persoonlijke oefenresultaten tonen.
+            Toegang controleren en persoonlijke oefenresultaten tonen.
           </p>
 
           <div className="mt-8 rounded-3xl border border-blue-200 bg-blue-50 p-6">
@@ -77,7 +77,7 @@ export default function RegistrerenPage() {
 
             <p className="mt-3 leading-7 text-blue-950/80">
               Deze registratiepagina maakt nu echte gebruikers aan in Supabase
-              Auth. Voortgang en Premium-status koppelen we later.
+              Auth. Voortgang en Toegangsstatus koppelen we later.
             </p>
           </div>
         </section>

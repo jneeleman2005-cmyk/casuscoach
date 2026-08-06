@@ -15,7 +15,7 @@ export default async function AccountGegevensPage() {
             href="/account"
             className="text-sm font-medium text-slate-500 hover:text-blue-700"
           >
-            ← Terug naar account
+            â† Terug naar account
           </a>
 
           <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -55,7 +55,7 @@ export default async function AccountGegevensPage() {
           href="/account"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          ← Terug naar account
+          â† Terug naar account
         </a>
 
         <section className="mt-10">
@@ -94,7 +94,7 @@ export default async function AccountGegevensPage() {
 
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
               <p className="text-sm font-semibold text-slate-500">
-                Premium-status
+                Toegangsstatus
               </p>
               <p className="mt-2 text-lg font-semibold text-slate-950">
                 Niet actief
@@ -110,7 +110,7 @@ export default async function AccountGegevensPage() {
 
           <p className="mt-4 leading-8 text-blue-950/80">
             Later kun je hier bijvoorbeeld je naam wijzigen, wachtwoord beheren
-            en abonnementsgegevens bekijken.
+            en accountgegevens bekijken.
           </p>
         </section>
       </div>

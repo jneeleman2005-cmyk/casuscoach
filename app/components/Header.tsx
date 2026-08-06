@@ -1,9 +1,11 @@
-import MobileMenu from "./Mobilemenu";
 import Logo from "./logo";
+import MobileMenu from "./Mobilemenu";
 import { createClient } from "../lib/supabase/server";
+import { getPlatformSettings } from "../lib/platform";
 
 export default async function Header() {
   const supabase = await createClient();
+  const platform = await getPlatformSettings();
 
   const {
     data: { user },
@@ -13,15 +15,15 @@ export default async function Header() {
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <a href="/" className="flex items-center gap-3">
-  <Logo />
+          <Logo />
 
-  <div>
-    <p className="font-bold leading-none text-slate-950">CasusCoach</p>
-    <p className="mt-1 text-xs text-slate-500">
-      Voor rechtenstudenten
-    </p>
-  </div>
-</a>
+          <div>
+            <p className="font-bold leading-none text-slate-950">CasusCoach</p>
+            <p className="mt-1 text-xs text-slate-500">
+              Voor rechtenstudenten
+            </p>
+          </div>
+        </a>
 
         <nav className="hidden items-center gap-5 text-sm font-medium text-slate-600 md:flex">
           <a href="/over" className="hover:text-blue-700">
@@ -40,9 +42,11 @@ export default async function Header() {
             Casussen
           </a>
 
-          <a href="/abonnementen" className="hover:text-blue-700">
-            Abonnementen
-          </a>
+          {!platform.isFreeMode ? (
+            <a href="/abonnementen" className="hover:text-blue-700">
+              Abonnementen
+            </a>
+          ) : null}
 
           <a href="/veelgestelde-vragen" className="hover:text-blue-700">
             FAQ
@@ -53,39 +57,43 @@ export default async function Header() {
           </a>
         </nav>
 
-        {user ? (
-          <div className="flex items-center gap-3">
-            <a
-              href="/account"
-              className="rounded-xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800"
-            >
-              Mijn account
-            </a>
+        <div className="flex items-center gap-3">
+          <MobileMenu isFreeMode={platform.isFreeMode} />
 
-            <a
-              href="/auth/logout"
-              className="hidden rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 shadow-sm transition hover:border-red-300 hover:bg-red-100 sm:inline-block"
-            >
-              Uitloggen
-            </a>
-          </div>
-        ) : (
-          <div className="flex items-center gap-3">
-            <a
-              href="/login"
-              className="hidden rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-700 sm:inline-block"
-            >
-              Inloggen
-            </a>
+          {user ? (
+            <>
+              <a
+                href="/account"
+                className="rounded-xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800"
+              >
+                Mijn account
+              </a>
 
-            <a
-              href="/registreren"
-              className="rounded-xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800"
-            >
-              Account maken
-            </a>
-          </div>
-        )}
+              <a
+                href="/auth/logout"
+                className="hidden rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 shadow-sm transition hover:border-red-300 hover:bg-red-100 sm:inline-block"
+              >
+                Uitloggen
+              </a>
+            </>
+          ) : (
+            <>
+              <a
+                href="/login"
+                className="hidden rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-700 sm:inline-block"
+              >
+                Inloggen
+              </a>
+
+              <a
+                href="/registreren"
+                className="rounded-xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800"
+              >
+                Account maken
+              </a>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );

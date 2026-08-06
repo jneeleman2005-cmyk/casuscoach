@@ -3,7 +3,7 @@ export default function ContactPage() {
     <main className="min-h-screen bg-slate-50 px-6 py-10 text-slate-950">
       <div className="mx-auto max-w-5xl">
         <a href="/" className="text-sm font-medium text-slate-500 hover:text-blue-700">
-          ← Terug naar home
+          â† Terug naar home
         </a>
 
         <section className="mt-10">
@@ -49,10 +49,10 @@ export default function ContactPage() {
               </p>
 
               <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-600">
-                <li>✓ Feedback op MC-vragen of casussen</li>
-                <li>✓ Een fout in een antwoord of uitleg</li>
-                <li>✓ Vragen over abonnementen</li>
-                <li>✓ Ideeën voor nieuwe rechtsgebieden of leerstukken</li>
+                <li>âœ“ Feedback op MC-vragen of casussen</li>
+                <li>âœ“ Een fout in een antwoord of uitleg</li>
+                <li>âœ“ Vragen over toegang</li>
+                <li>âœ“ IdeeÃ«n voor nieuwe rechtsgebieden of leerstukken</li>
               </ul>
             </div>
           </div>

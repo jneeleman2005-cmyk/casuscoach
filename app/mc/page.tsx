@@ -220,7 +220,7 @@ export default function McPage() {
           href="/oefenen"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          ← Terug naar oefenen
+          â† Terug naar oefenen
         </a>
 
         <section className="mt-10">
@@ -331,7 +331,7 @@ export default function McPage() {
 
                   {currentQuestion.is_premium ? (
                     <span className="rounded-full border border-green-200 bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
-                      Premium
+                      Gratis toegang
                     </span>
                   ) : (
                     <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">

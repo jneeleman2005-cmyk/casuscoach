@@ -38,7 +38,7 @@ export default function LoginPage() {
             href="/"
             className="text-sm font-medium text-slate-500 hover:text-blue-700"
           >
-            ← Terug naar home
+            â† Terug naar home
           </a>
 
           <p className="mt-12 text-sm font-semibold uppercase tracking-wide text-blue-700">
@@ -63,9 +63,9 @@ export default function LoginPage() {
             </div>
 
             <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="font-semibold">Premium-status</p>
+              <p className="font-semibold">Toegangsstatus</p>
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                Later wordt hier gecontroleerd of je Premium actief is.
+                Hier zie je je account en voortgang.
               </p>
             </div>
           </div>
@@ -110,7 +110,7 @@ export default function LoginPage() {
                 id="password"
                 name="password"
                 type="password"
-                placeholder="••••••••"
+                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"

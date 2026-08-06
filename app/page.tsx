@@ -3,11 +3,11 @@ export default function Home() {
     <main className="min-h-screen bg-slate-50 text-slate-950">
       <section className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-20 text-center">
         <p className="mb-4 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700">
-          Voor rechtenstudenten · Gratis proberen
+          Voor rechtenstudenten Ã‚Â· Gratis proberen
         </p>
 
         <h1 className="max-w-4xl text-5xl font-bold tracking-tight sm:text-6xl">
-          Bereid je slimmer voor op je rechten­tentamen.
+          Bereid je slimmer voor op je rechtenÃ‚Â­tentamen.
         </h1>
 
         <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
@@ -25,7 +25,7 @@ export default function Home() {
           </a>
 
           <a
-            href="/abonnementen"
+            href="/oefenen"
             className="rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-900 shadow-sm transition hover:bg-slate-100"
           >
             Bekijk studentenprijzen
@@ -69,7 +69,7 @@ export default function Home() {
             <h2 className="mt-3 text-3xl font-bold">MC-vragen oefenen</h2>
 
             <p className="mt-5 leading-7 text-slate-600">
-              Kies een rechtsgebied en selecteer één of meerdere leerstukken.
+              Kies een rechtsgebied en selecteer ÃƒÂ©ÃƒÂ©n of meerdere leerstukken.
               Je krijgt direct te zien of je antwoord klopt en waarom de andere
               antwoorden onjuist zijn.
             </p>
@@ -113,15 +113,15 @@ export default function Home() {
           <div className="grid gap-8 md:grid-cols-[1.5fr_1fr] md:items-center">
             <div>
               <p className="text-sm font-semibold uppercase tracking-wide text-green-700">
-                Premium voor studenten
+                Gratis voor studenten
               </p>
 
               <h2 className="mt-3 text-3xl font-bold">
-                Onbeperkt oefenen rond je tentamenperiode.
+                Gratis oefenen rond je tentamenperiode.
               </h2>
 
               <p className="mt-5 leading-8 text-green-950/80">
-                Met een studentenabonnement kun je onbeperkt oefenen met
+                Gebruik CasusCoach om te oefenen met
                 MC-vragen en casussen. Later voegen we AI-feedback toe, zodat je
                 casusantwoorden inhoudelijk worden beoordeeld op rechtsvraag,
                 rechtsregel, toepassing en conclusie.
@@ -129,15 +129,15 @@ export default function Home() {
             </div>
 
             <div className="rounded-2xl border border-green-200 bg-white p-6 shadow-sm">
-              <p className="text-sm text-slate-500">Vanaf</p>
-              <p className="mt-2 text-4xl font-bold">€2,99</p>
-              <p className="mt-1 text-sm text-slate-500">per week</p>
+              <p className="text-sm text-slate-500"></p>
+              <p className="mt-2 text-4xl font-bold">Gratis</p>
+              <p className="mt-1 text-sm text-slate-500"></p>
 
               <a
-                href="/abonnementen"
+                href="/oefenen"
                 className="mt-6 block rounded-xl bg-green-700 px-5 py-3 text-center font-semibold text-white transition hover:bg-green-800"
               >
-                Bekijk abonnementen
+                Start met oefenen
               </a>
             </div>
           </div>

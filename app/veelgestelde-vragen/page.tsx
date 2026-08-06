@@ -10,9 +10,9 @@ const faqs = [
       "Ja. Je kunt CasusCoach gratis proberen met een beperkte demo. Op dit moment kun je gratis een beperkt aantal MC-vragen en casussen oefenen per selectie.",
   },
   {
-    question: "Wat krijg ik met Premium?",
+    question: "Wat krijg ik met Gratis toegang?",
     answer:
-      "Met Premium kun je onbeperkt oefenen met MC-vragen en casussen. Later kunnen daar extra functies bij komen, zoals voortgang per vak en AI-feedback op casusantwoorden.",
+      "Met Gratis toegang kun je onbeperkt oefenen met MC-vragen en casussen. Later kunnen daar extra functies bij komen, zoals voortgang per vak en AI-feedback op casusantwoorden.",
   },
   {
     question: "Is CasusCoach juridisch advies?",
@@ -27,7 +27,7 @@ const faqs = [
   {
     question: "Kan ik per leerstuk oefenen?",
     answer:
-      "Ja. Je kiest eerst een rechtsgebied en daarna één of meerdere leerstukken. Zo kun je gericht oefenen of juist leerstukken combineren.",
+      "Ja. Je kiest eerst een rechtsgebied en daarna Ã©Ã©n of meerdere leerstukken. Zo kun je gericht oefenen of juist leerstukken combineren.",
   },
   {
     question: "Werkt CasusCoach ook op telefoon?",
@@ -37,7 +37,7 @@ const faqs = [
   {
     question: "Wanneer komt AI-feedback?",
     answer:
-      "AI-feedback is bedoeld als latere functie. Eerst wordt de basis van het platform goed neergezet: oefenen, accounts, premiumstatus en daarna pas AI-feedback.",
+      "AI-feedback is bedoeld als latere functie. Eerst wordt de basis van het platform goed neergezet: oefenen, accounts, toegangsstatus en daarna pas AI-feedback.",
   },
 ];
 
@@ -49,7 +49,7 @@ export default function VeelgesteldeVragenPage() {
           href="/"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          ← Terug naar home
+          â† Terug naar home
         </a>
 
         <section className="mt-10">
@@ -58,7 +58,7 @@ export default function VeelgesteldeVragenPage() {
           </p>
 
           <h1 className="mt-4 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl">
-            Vragen over oefenen, gratis gebruik en Premium.
+            Vragen over oefenen, gratis gebruik en Gratis toegang.
           </h1>
 
           <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
