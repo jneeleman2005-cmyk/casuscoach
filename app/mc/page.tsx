@@ -28,7 +28,7 @@ type McQuestion = {
   correct_answer: "A" | "B" | "C" | "D";
   explanation: string;
   difficulty: string;
-  is_premium: boolean;
+  is_uitgebreid: boolean;
 };
 
 export default function McPage() {
@@ -125,7 +125,7 @@ export default function McPage() {
       let query = supabase
         .from("mc_questions")
         .select(
-          "id, subject_id, topic_id, question, option_a, option_b, option_c, option_d, correct_answer, explanation, difficulty, is_premium",
+          "id, subject_id, topic_id, question, option_a, option_b, option_c, option_d, correct_answer, explanation, difficulty, is_uitgebreid",
         )
         .eq("subject_id", subjectId)
         .eq("is_published", true)
@@ -220,7 +220,7 @@ export default function McPage() {
           href="/oefenen"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          â† Terug naar oefenen
+          Ã¢â€ Â Terug naar oefenen
         </a>
 
         <section className="mt-10">
@@ -329,7 +329,7 @@ export default function McPage() {
                     {currentQuestion.difficulty}
                   </span>
 
-                  {currentQuestion.is_premium ? (
+                  {currentQuestion.is_uitgebreid ? (
                     <span className="rounded-full border border-green-200 bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
                       Gratis toegang
                     </span>

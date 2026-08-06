@@ -26,7 +26,7 @@ type OpenCase = {
   assessment_points: string;
   explanation: string;
   difficulty: string;
-  is_premium: boolean;
+  is_uitgebreid: boolean;
 };
 
 export default function CasusPage() {
@@ -123,7 +123,7 @@ export default function CasusPage() {
       let query = supabase
         .from("open_cases")
         .select(
-          "id, subject_id, topic_id, title, case_text, model_answer, assessment_points, explanation, difficulty, is_premium",
+          "id, subject_id, topic_id, title, case_text, model_answer, assessment_points, explanation, difficulty, is_uitgebreid",
         )
         .eq("subject_id", subjectId)
         .eq("is_published", true)
@@ -212,7 +212,7 @@ export default function CasusPage() {
           href="/oefenen"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          â† Terug naar oefenen
+          Ã¢â€ Â Terug naar oefenen
         </a>
 
         <section className="mt-10">
@@ -327,7 +327,7 @@ export default function CasusPage() {
                     {currentCase.difficulty}
                   </span>
 
-                  {currentCase.is_premium ? (
+                  {currentCase.is_uitgebreid ? (
                     <span className="rounded-full border border-green-200 bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
                       Gratis toegang
                     </span>

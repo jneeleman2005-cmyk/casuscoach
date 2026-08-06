@@ -38,7 +38,7 @@ export default function LoginPage() {
             href="/"
             className="text-sm font-medium text-slate-500 hover:text-blue-700"
           >
-            â† Terug naar home
+            Ã¢â€ Â Terug naar home
           </a>
 
           <p className="mt-12 text-sm font-semibold uppercase tracking-wide text-blue-700">
@@ -110,7 +110,7 @@ export default function LoginPage() {
                 id="password"
                 name="password"
                 type="password"
-                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                placeholder="Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"

@@ -54,7 +54,7 @@ export default function RegistrerenPage() {
             href="/"
             className="text-sm font-medium text-slate-500 hover:text-blue-700"
           >
-            â† Terug naar home
+            Ã¢â€ Â Terug naar home
           </a>
 
           <p className="mt-12 text-sm font-semibold uppercase tracking-wide text-blue-700">

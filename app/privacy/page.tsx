@@ -6,7 +6,7 @@ export default function PrivacyPage() {
           href="/"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          â† Terug naar home
+          Ã¢â€ Â Terug naar home
         </a>
 
         <section className="mt-10">
@@ -78,7 +78,7 @@ export default function PrivacyPage() {
             <p className="mt-4 leading-8 text-slate-600">
               CasusCoach kan technische gegevens gebruiken die nodig zijn om de
               website goed te laten werken, zoals browserinformatie, apparaat,
-              foutmeldingen en gebruik van paginaâ€™s. Als later analytische of
+              foutmeldingen en gebruik van paginaÃ¢â‚¬â„¢s. Als later analytische of
               marketingcookies worden gebruikt, wordt deze privacyverklaring
               daarop aangepast.
             </p>
@@ -112,7 +112,7 @@ export default function PrivacyPage() {
               Gebruikers kunnen later verzoeken om inzage, correctie,
               verwijdering of beperking van hun persoonsgegevens. Zodra
               gebruikersaccounts en contactgegevens definitief zijn ingericht,
-              wordt hier uitgelegd hoe zoâ€™n verzoek kan worden ingediend.
+              wordt hier uitgelegd hoe zoÃ¢â‚¬â„¢n verzoek kan worden ingediend.
             </p>
           </article>
 
