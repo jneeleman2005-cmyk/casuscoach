@@ -10,9 +10,14 @@ export default function MobileMenu() {
       <button
         type="button"
         onClick={() => setOpen((value) => !value)}
-        className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-700"
+        aria-label={open ? "Menu sluiten" : "Menu openen"}
+        className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-700"
       >
-        Menu
+        {open ? (
+          <span className="text-2xl leading-none">×</span>
+        ) : (
+          <span className="text-2xl leading-none">☰</span>
+        )}
       </button>
 
       {open ? (

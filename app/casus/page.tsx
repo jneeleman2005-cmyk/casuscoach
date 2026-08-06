@@ -1,435 +1,454 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
-import { subjects } from "../data/subjects";
-import { cases } from "../data/cases";
+import { useEffect, useMemo, useState } from "react";
+import { createClient } from "../lib/supabase/client";
 
-const FREE_CASE_LIMIT = 1;
+type Subject = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
+type Topic = {
+  id: string;
+  subject_id: string;
+  name: string;
+  slug: string;
+};
+
+type OpenCase = {
+  id: string;
+  subject_id: string;
+  topic_id: string | null;
+  title: string;
+  case_text: string;
+  model_answer: string;
+  assessment_points: string;
+  explanation: string;
+  difficulty: string;
+  is_premium: boolean;
+};
 
 export default function CasusPage() {
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
-  const [hasStarted, setHasStarted] = useState(false);
-  const [currentCaseIndex, setCurrentCaseIndex] = useState(0);
-  const [answer, setAnswer] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [topics, setTopics] = useState<Topic[]>([]);
+  const [cases, setCases] = useState<OpenCase[]>([]);
 
-  const topicsSectionRef = useRef<HTMLElement | null>(null);
+  const [subjectId, setSubjectId] = useState("");
+  const [topicId, setTopicId] = useState("");
 
-  const subject = subjects.find((item) => item.slug === selectedSubject);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [userAnswer, setUserAnswer] = useState("");
+  const [showAnswer, setShowAnswer] = useState(false);
 
-  const allFilteredCases = useMemo(() => {
-    const matchingCases = cases.filter((item) => {
-      return (
-        item.subject === selectedSubject && selectedTopics.includes(item.topic)
-      );
-    });
+  const [savingAnswer, setSavingAnswer] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
+  const [saveError, setSaveError] = useState("");
 
-    if (matchingCases.length > 0) {
-      return matchingCases;
-    }
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-    if (selectedSubject && selectedTopics.length > 0) {
-      return selectedTopics.map((topic) => ({
-        subject: selectedSubject,
-        topic,
-        title: `${subject?.name ?? "Rechtsgebied"} · ${topic}`,
-        text: `Dit is een tijdelijke voorbeeldcasus voor ${
-          subject?.name ?? "het gekozen rechtsgebied"
-        } over het leerstuk ${topic}. Later kun je hier een echte casus voor invullen.`,
-        modelAnswer:
-          "Dit is een tijdelijk voorbeeldantwoord. Later vervangen we dit door een volledig uitgewerkt voorbeeldantwoord volgens PROC/IRAC.",
-      }));
-    }
+  const filteredTopics = useMemo(() => {
+    return topics.filter((topic) => topic.subject_id === subjectId);
+  }, [topics, subjectId]);
 
-    return [];
-  }, [selectedSubject, selectedTopics, subject?.name]);
+  const currentCase = cases[currentIndex];
 
-  const filteredCases = allFilteredCases.slice(0, FREE_CASE_LIMIT);
-  const currentCase = filteredCases[currentCaseIndex];
+  useEffect(() => {
+    async function loadInitialData() {
+      setLoading(true);
+      setError("");
 
-  function selectSubject(slug: string) {
-    setSelectedSubject(slug);
-    setSelectedTopics([]);
+      const supabase = createClient();
 
-    setTimeout(() => {
-      topicsSectionRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 0);
-  }
+      const { data: subjectsData, error: subjectsError } = await supabase
+        .from("subjects")
+        .select("id, name, slug")
+        .eq("is_published", true)
+        .order("sort_order", { ascending: true });
 
-  function toggleTopic(topic: string) {
-    setSelectedTopics((previous) => {
-      if (previous.includes(topic)) {
-        return previous.filter((item) => item !== topic);
+      if (subjectsError) {
+        setError("Rechtsgebieden konden niet worden geladen.");
+        setLoading(false);
+        return;
       }
 
-      return [...previous, topic];
+      const { data: topicsData, error: topicsError } = await supabase
+        .from("topics")
+        .select("id, subject_id, name, slug")
+        .eq("is_published", true)
+        .order("sort_order", { ascending: true });
+
+      if (topicsError) {
+        setError("Leerstukken konden niet worden geladen.");
+        setLoading(false);
+        return;
+      }
+
+      setSubjects(subjectsData ?? []);
+      setTopics(topicsData ?? []);
+
+      if (subjectsData && subjectsData.length > 0) {
+        setSubjectId(subjectsData[0].id);
+      }
+
+      setLoading(false);
+    }
+
+    loadInitialData();
+  }, []);
+
+  useEffect(() => {
+    const firstTopic = topics.find((topic) => topic.subject_id === subjectId);
+    setTopicId(firstTopic?.id ?? "");
+  }, [subjectId, topics]);
+
+  useEffect(() => {
+    async function loadCases() {
+      if (!subjectId) {
+        return;
+      }
+
+      setLoading(true);
+      setError("");
+      setCases([]);
+      setCurrentIndex(0);
+      setUserAnswer("");
+      setShowAnswer(false);
+      setSaveMessage("");
+      setSaveError("");
+
+      const supabase = createClient();
+
+      let query = supabase
+        .from("open_cases")
+        .select(
+          "id, subject_id, topic_id, title, case_text, model_answer, assessment_points, explanation, difficulty, is_premium",
+        )
+        .eq("subject_id", subjectId)
+        .eq("is_published", true)
+        .order("created_at", { ascending: false });
+
+      if (topicId) {
+        query = query.eq("topic_id", topicId);
+      }
+
+      const { data, error } = await query;
+
+      if (error) {
+        setError("Casussen konden niet worden geladen.");
+        setLoading(false);
+        return;
+      }
+
+      setCases(data ?? []);
+      setLoading(false);
+    }
+
+    loadCases();
+  }, [subjectId, topicId]);
+
+  async function handleSaveAnswer() {
+    setSavingAnswer(true);
+    setSaveMessage("");
+    setSaveError("");
+
+    if (!currentCase) {
+      setSaveError("Er is geen casus geselecteerd.");
+      setSavingAnswer(false);
+      return;
+    }
+
+    if (!userAnswer.trim()) {
+      setSaveError("Schrijf eerst een antwoord voordat je opslaat.");
+      setSavingAnswer(false);
+      return;
+    }
+
+    const supabase = createClient();
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setSaveError("Je moet ingelogd zijn om je antwoord op te slaan.");
+      setSavingAnswer(false);
+      return;
+    }
+
+    const { error } = await supabase.from("user_case_attempts").insert({
+      case_id: currentCase.id,
+      answer: userAnswer,
     });
-  }
 
-  function selectAllTopics() {
-    if (!subject) return;
-    setSelectedTopics(subject.topics);
-  }
-
-  function clearTopics() {
-    setSelectedTopics([]);
-  }
-
-  function startPractice() {
-    if (!selectedSubject) {
-      alert("Kies eerst een rechtsgebied.");
+    if (error) {
+      setSaveError("Opslaan mislukt. Probeer het opnieuw.");
+      setSavingAnswer(false);
       return;
     }
 
-    if (selectedTopics.length === 0) {
-      alert("Kies minimaal één leerstuk.");
-      return;
-    }
-
-    if (allFilteredCases.length === 0) {
-      alert("Voor deze selectie staan nog geen casussen klaar.");
-      return;
-    }
-
-    setHasStarted(true);
-    setCurrentCaseIndex(0);
-    setAnswer("");
-    setSubmitted(false);
+    setSaveMessage("Je antwoord is opgeslagen.");
+    setSavingAnswer(false);
   }
 
-  function submitAnswer() {
-    if (answer.trim().length < 20) {
-      alert("Schrijf eerst een iets uitgebreider antwoord.");
-      return;
+  function handleNextCase() {
+    setShowAnswer(false);
+    setUserAnswer("");
+    setSaveMessage("");
+    setSaveError("");
+
+    if (currentIndex + 1 < cases.length) {
+      setCurrentIndex((value) => value + 1);
+    } else {
+      setCurrentIndex(0);
     }
-
-    setSubmitted(true);
-  }
-
-  function nextCase() {
-    const nextIndex = currentCaseIndex + 1;
-
-    if (nextIndex >= filteredCases.length) {
-      setHasStarted(false);
-      setCurrentCaseIndex(0);
-      setAnswer("");
-      setSubmitted(false);
-      return;
-    }
-
-    setCurrentCaseIndex(nextIndex);
-    setAnswer("");
-    setSubmitted(false);
-  }
-
-  function backToSelection() {
-    setHasStarted(false);
-    setCurrentCaseIndex(0);
-    setAnswer("");
-    setSubmitted(false);
-  }
-
-  if (hasStarted && currentCase) {
-    return (
-      <main className="min-h-screen bg-slate-50 px-6 py-10 text-slate-950">
-        <div className="mx-auto max-w-4xl">
-          <button
-            onClick={backToSelection}
-            className="text-sm font-medium text-slate-500 hover:text-blue-700"
-          >
-            ← Terug naar selectie
-          </button>
-
-          <section className="mt-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
-                {subject?.name} · {currentCase.topic}
-              </p>
-
-              <p className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-600">
-                Casus {currentCaseIndex + 1} van {filteredCases.length}
-              </p>
-            </div>
-
-            <div className="mt-6 h-2 overflow-hidden rounded-full bg-slate-200">
-              <div
-                className="h-full bg-blue-700 transition-all"
-                style={{
-                  width: `${
-                    ((currentCaseIndex + 1) / filteredCases.length) * 100
-                  }%`,
-                }}
-              />
-            </div>
-
-            <h1 className="mt-6 text-3xl font-bold">{currentCase.title}</h1>
-
-            <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-              <p className="leading-8 text-slate-700">{currentCase.text}</p>
-            </div>
-
-            <div className="mt-6">
-              <label className="text-sm font-semibold text-slate-700">
-                Jouw antwoord
-              </label>
-
-              <textarea
-                value={answer}
-                onChange={(event) => setAnswer(event.target.value)}
-                placeholder="Werk je antwoord uit volgens PROC/IRAC: probleem/rechtsvraag, regel, toepassing en conclusie..."
-                className="mt-2 min-h-56 w-full rounded-2xl border border-slate-300 bg-white p-4 leading-7 text-slate-950 shadow-sm outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
-              />
-            </div>
-
-            {!submitted && (
-              <button
-                onClick={submitAnswer}
-                className="mt-5 rounded-xl bg-blue-700 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
-              >
-                Lever antwoord in
-              </button>
-            )}
-
-            {submitted && (
-              <section className="mt-8 space-y-6">
-                <div className="rounded-2xl border border-blue-200 bg-blue-50 p-6">
-                  <h2 className="text-2xl font-bold text-blue-950">
-                    Feedback op jouw antwoord
-                  </h2>
-
-                  <p className="mt-4 leading-8 text-blue-950/80">
-                    Dit is nu nog vaste demo-feedback. Straks koppelen we hier
-                    AI aan. Dan beoordeelt het systeem je antwoord op
-                    rechtsvraag, regel, toepassing en conclusie.
-                  </p>
-
-                  <ul className="mt-4 list-disc space-y-2 pl-5 text-blue-950/80">
-                    <li>Begin met een duidelijke rechtsvraag.</li>
-                    <li>Noem de juiste rechtsregel of toetsingsmaatstaf.</li>
-                    <li>Pas de regel concreet toe op de feiten.</li>
-                    <li>Eindig met een duidelijke conclusie.</li>
-                  </ul>
-                </div>
-
-                <div className="rounded-2xl border border-green-200 bg-green-50 p-6">
-                  <h2 className="text-2xl font-bold text-green-950">
-                    Voorbeeldantwoord
-                  </h2>
-
-                  <p className="mt-4 leading-8 text-green-950/80">
-                    {currentCase.modelAnswer}
-                  </p>
-                </div>
-
-                {allFilteredCases.length > FREE_CASE_LIMIT && (
-                  <div className="rounded-2xl border border-blue-200 bg-blue-50 p-6">
-                    <h2 className="text-2xl font-bold text-blue-950">
-                      Gratis demo afgerond
-                    </h2>
-
-                    <p className="mt-4 leading-8 text-blue-950/80">
-                      Deze selectie bevat {allFilteredCases.length} casussen. In
-                      de gratis demo kreeg je er {FREE_CASE_LIMIT}. Upgrade naar
-                      een studentenabonnement voor onbeperkt casussen oefenen.
-                    </p>
-
-                    <a
-                      href="/abonnementen"
-                      className="mt-5 inline-block rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
-                    >
-                      Bekijk studentenprijzen
-                    </a>
-                  </div>
-                )}
-
-                <button
-                  onClick={nextCase}
-                  className="rounded-xl bg-blue-700 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
-                >
-                  {currentCaseIndex + 1 >= filteredCases.length
-                    ? "Terug naar selectie"
-                    : "Volgende casus"}
-                </button>
-              </section>
-            )}
-          </section>
-        </div>
-      </main>
-    );
   }
 
   return (
     <main className="min-h-screen bg-slate-50 px-6 py-10 text-slate-950">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl">
         <a
           href="/oefenen"
           className="text-sm font-medium text-slate-500 hover:text-blue-700"
         >
-          ← Terug naar oefenvormen
+          ← Terug naar oefenen
         </a>
-
-        <div className="mt-8 rounded-2xl border border-blue-200 bg-blue-50 p-5">
-          <p className="font-semibold text-blue-800">Gratis proberen</p>
-
-          <p className="mt-2 text-sm leading-6 text-blue-900/80">
-            Je kunt nu maximaal {FREE_CASE_LIMIT} casus per selectie oefenen.
-            Upgrade naar een studentenabonnement voor onbeperkt casussen oefenen.
-          </p>
-
-          <a
-            href="/abonnementen"
-            className="mt-4 inline-block rounded-xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-800"
-          >
-            Bekijk studentenprijzen
-          </a>
-        </div>
 
         <section className="mt-10">
           <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
-            Casus oplossen
+            Open casussen
           </p>
 
-          <h1 className="mt-4 text-4xl font-bold">Kies je rechtsgebied</h1>
+          <h1 className="mt-4 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl">
+            Oefen juridische casussen met modelantwoord.
+          </h1>
 
-          <p className="mt-5 max-w-3xl leading-8 text-slate-600">
-            Kies eerst een rechtsgebied. Daarna selecteer je één of meerdere
-            leerstukken die je wilt oefenen. Je krijgt in de gratis demo een
-            beperkte selectie van casussen.
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+            Kies een rechtsgebied en leerstuk. Lees de casus, schrijf eerst je
+            eigen antwoord en vergelijk dit daarna met het modelantwoord.
           </p>
         </section>
 
-        <section className="mt-8 grid gap-5 md:grid-cols-2">
-          {subjects.map((item) => {
-            const isSelected = selectedSubject === item.slug;
+        <section className="mt-10 grid gap-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-2">
+          <div>
+            <label
+              htmlFor="subject"
+              className="text-sm font-semibold text-slate-700"
+            >
+              Rechtsgebied
+            </label>
 
-            return (
-              <button
-                key={item.slug}
-                onClick={() => selectSubject(item.slug)}
-                className={`rounded-3xl border p-6 text-left shadow-sm transition ${
-                  isSelected
-                    ? "border-blue-400 bg-blue-50"
-                    : "border-slate-200 bg-white hover:border-blue-300 hover:shadow-md"
-                }`}
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h2 className="text-2xl font-bold">{item.name}</h2>
+            <select
+              id="subject"
+              value={subjectId}
+              onChange={(event) => setSubjectId(event.target.value)}
+              className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+            >
+              {subjects.map((subject) => (
+                <option key={subject.id} value={subject.id}>
+                  {subject.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-                    <p className="mt-3 text-slate-600">{item.description}</p>
-                  </div>
+          <div>
+            <label
+              htmlFor="topic"
+              className="text-sm font-semibold text-slate-700"
+            >
+              Leerstuk
+            </label>
 
-                  <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700 ring-1 ring-green-200">
-                    Beschikbaar
-                  </span>
-                </div>
+            <select
+              id="topic"
+              value={topicId}
+              onChange={(event) => setTopicId(event.target.value)}
+              className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+            >
+              <option value="">Alle leerstukken</option>
 
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {item.topics.map((topic) => (
-                    <span
-                      key={topic}
-                      className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-600"
-                    >
-                      {topic}
-                    </span>
-                  ))}
-                </div>
-              </button>
-            );
-          })}
+              {filteredTopics.map((topic) => (
+                <option key={topic.id} value={topic.id}>
+                  {topic.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </section>
 
-        {subject && (
-          <section
-            ref={topicsSectionRef}
-            className="mt-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
-          >
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        {error ? (
+          <section className="mt-8 rounded-3xl border border-red-200 bg-red-50 p-6 text-red-700">
+            {error}
+          </section>
+        ) : null}
+
+        {loading ? (
+          <section className="mt-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+            <p className="text-slate-600">Casussen laden...</p>
+          </section>
+        ) : null}
+
+        {!loading && !currentCase ? (
+          <section className="mt-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+            <h2 className="text-2xl font-bold">
+              Nog geen casussen beschikbaar.
+            </h2>
+
+            <p className="mt-4 leading-8 text-slate-600">
+              Voor dit rechtsgebied of leerstuk zijn nog geen open casussen
+              toegevoegd. Voeg eerst een casus toe via de adminpagina.
+            </p>
+
+            <a
+              href="/admin/casussen"
+              className="mt-6 inline-block rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
+            >
+              Casus toevoegen
+            </a>
+          </section>
+        ) : null}
+
+        {currentCase ? (
+          <section className="mt-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
-                  Leerstukken
+                  Casus {currentIndex + 1} van {cases.length}
                 </p>
 
-                <h2 className="mt-2 text-3xl font-bold">{subject.name}</h2>
-              </div>
+                <h2 className="mt-3 text-3xl font-bold">
+                  {currentCase.title}
+                </h2>
 
-              <div className="flex gap-3">
-                <button
-                  onClick={selectAllTopics}
-                  className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-100"
-                >
-                  Selecteer alles
-                </button>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600">
+                    {currentCase.difficulty}
+                  </span>
 
-                <button
-                  onClick={clearTopics}
-                  className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-100"
-                >
-                  Wis selectie
-                </button>
+                  {currentCase.is_premium ? (
+                    <span className="rounded-full border border-green-200 bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
+                      Premium
+                    </span>
+                  ) : (
+                    <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
+                      Gratis
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {subject.topics.map((topic) => {
-                const isSelected = selectedTopics.includes(topic);
-
-                return (
-                  <button
-                    key={topic}
-                    onClick={() => toggleTopic(topic)}
-                    className={`rounded-2xl border p-4 text-left transition ${
-                      isSelected
-                        ? "border-blue-400 bg-blue-50"
-                        : "border-slate-200 bg-white hover:border-blue-300 hover:bg-blue-50"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <span className="font-semibold">{topic}</span>
-
-                      <span
-                        className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                          isSelected
-                            ? "bg-blue-700 text-white"
-                            : "bg-slate-100 text-slate-500"
-                        }`}
-                      >
-                        {isSelected ? "Geselecteerd" : "Kies"}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
+            <div className="mt-8 rounded-3xl border border-slate-200 bg-slate-50 p-6">
+              <p className="whitespace-pre-line leading-8 text-slate-700">
+                {currentCase.case_text}
+              </p>
             </div>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm text-slate-500">
-                  Geselecteerd: {selectedTopics.length} leerstuk
-                  {selectedTopics.length === 1 ? "" : "ken"}
-                </p>
+            <div className="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+              <label
+                htmlFor="userAnswer"
+                className="text-sm font-semibold uppercase tracking-wide text-blue-700"
+              >
+                Jouw antwoord
+              </label>
 
-                {selectedTopics.length > 0 && (
-                  <p className="mt-2 text-sm text-slate-500">
-                    Gratis beschikbaar: {filteredCases.length} van{" "}
-                    {allFilteredCases.length} casussen
-                  </p>
-                )}
-              </div>
+              <p className="mt-3 text-sm leading-6 text-slate-600">
+                Schrijf eerst zelf je juridische uitwerking. Daarna kun je jouw
+                antwoord vergelijken met het modelantwoord.
+              </p>
+
+              <textarea
+                id="userAnswer"
+                value={userAnswer}
+                onChange={(event) => setUserAnswer(event.target.value)}
+                rows={10}
+                placeholder="Typ hier je eigen antwoord op de casus..."
+                className="mt-5 w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              />
+
+         <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+  <button
+    type="button"
+    onClick={handleSaveAnswer}
+    disabled={savingAnswer}
+    className="rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+  >
+    {savingAnswer ? "Opslaan..." : "Mijn antwoord opslaan"}
+  </button>
+</div>
+
+              {saveError ? (
+                <div className="mt-5 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm leading-6 text-red-700">
+                  {saveError}
+                </div>
+              ) : null}
+
+              {saveMessage ? (
+                <div className="mt-5 rounded-2xl border border-green-200 bg-green-50 p-4 text-sm leading-6 text-green-700">
+                  {saveMessage}
+                </div>
+              ) : null}
+            </div>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <button
+                type="button"
+                onClick={() => setShowAnswer((value) => !value)}
+                className="rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
+              >
+                {showAnswer ? "Modelantwoord verbergen" : "Modelantwoord tonen"}
+              </button>
 
               <button
-                onClick={startPractice}
-                className="rounded-xl bg-blue-700 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
+                type="button"
+                onClick={handleNextCase}
+                className="rounded-xl border border-slate-200 bg-white px-5 py-3 font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-700"
               >
-                Start casus oefenen
+                Volgende casus
               </button>
             </div>
+
+            {showAnswer ? (
+              <div className="mt-8 space-y-6">
+                <article className="rounded-3xl border border-green-200 bg-green-50 p-6">
+                  <h3 className="text-xl font-bold text-green-950">
+                    Modelantwoord
+                  </h3>
+
+                  <p className="mt-4 whitespace-pre-line leading-8 text-green-950/80">
+                    {currentCase.model_answer}
+                  </p>
+                </article>
+
+                {currentCase.assessment_points ? (
+                  <article className="rounded-3xl border border-blue-200 bg-blue-50 p-6">
+                    <h3 className="text-xl font-bold text-blue-950">
+                      Beoordelingspunten
+                    </h3>
+
+                    <p className="mt-4 whitespace-pre-line leading-8 text-blue-950/80">
+                      {currentCase.assessment_points}
+                    </p>
+                  </article>
+                ) : null}
+
+                {currentCase.explanation ? (
+                  <article className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                    <h3 className="text-xl font-bold text-slate-950">
+                      Toelichting
+                    </h3>
+
+                    <p className="mt-4 whitespace-pre-line leading-8 text-slate-700">
+                      {currentCase.explanation}
+                    </p>
+                  </article>
+                ) : null}
+              </div>
+            ) : null}
           </section>
-        )}
+        ) : null}
       </div>
     </main>
   );
