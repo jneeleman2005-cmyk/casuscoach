@@ -99,9 +99,8 @@ export default function CasusPage() {
   }, []);
 
   useEffect(() => {
-    const firstTopic = topics.find((topic) => topic.subject_id === subjectId);
-    setTopicId(firstTopic?.id ?? "");
-  }, [subjectId, topics]);
+    setTopicId("");
+  }, [subjectId]);
 
   useEffect(() => {
     async function loadCases() {
@@ -136,7 +135,7 @@ export default function CasusPage() {
       const { data, error } = await query;
 
       if (error) {
-        setError("Casussen konden niet worden geladen.");
+        setError("Casussen konden niet worden geladen. Probeer het later opnieuw.");
         setLoading(false);
         return;
       }

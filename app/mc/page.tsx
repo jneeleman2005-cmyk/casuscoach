@@ -101,9 +101,8 @@ export default function McPage() {
   }, []);
 
   useEffect(() => {
-    const firstTopic = topics.find((topic) => topic.subject_id === subjectId);
-    setTopicId(firstTopic?.id ?? "");
-  }, [subjectId, topics]);
+    setTopicId("");
+  }, [subjectId]);
 
   useEffect(() => {
     async function loadQuestions() {
@@ -138,7 +137,7 @@ export default function McPage() {
       const { data, error } = await query;
 
       if (error) {
-        setError("MC-vragen konden niet worden geladen.");
+        setError("MC-vragen konden niet worden geladen. Probeer het later opnieuw.");
         setLoading(false);
         return;
       }
