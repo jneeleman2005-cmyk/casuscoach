@@ -298,15 +298,8 @@ export default function CasusPage() {
 
             <p className="mt-4 leading-8 text-slate-600">
               Voor dit rechtsgebied of leerstuk zijn nog geen open casussen
-              toegevoegd. Voeg eerst een casus toe via de adminpagina.
+              toegevoegd. Kies eventueel een ander rechtsgebied of leerstuk.
             </p>
-
-            <a
-              href="/admin/casussen"
-              className="mt-6 inline-block rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
-            >
-              Casus toevoegen
-            </a>
           </section>
         ) : null}
 

@@ -303,16 +303,8 @@ export default function McPage() {
             <h2 className="text-2xl font-bold">Nog geen vragen beschikbaar.</h2>
 
             <p className="mt-4 leading-8 text-slate-600">
-              Voor dit rechtsgebied of leerstuk zijn nog geen MC-vragen
-              toegevoegd. Voeg eerst vragen toe via de adminpagina.
+              Voor deze selectie zijn nog geen MC-vragen toegevoegd. Kies eventueel een ander rechtsgebied of leerstuk.
             </p>
-
-            <a
-              href="/admin/vragen"
-              className="mt-6 inline-block rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800"
-            >
-              Vraag toevoegen
-            </a>
           </section>
         ) : null}
 
