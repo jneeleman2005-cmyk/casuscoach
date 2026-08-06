@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { createClient } from "../lib/supabase/client";
+import MarkdownText from "../components/MarkdownText";
 
 type Subject = {
   id: string;
@@ -400,17 +401,11 @@ export default function McPage() {
                     : `Niet goed. Het juiste antwoord is ${currentQuestion.correct_answer}.`}
                 </p>
 
-                                <div className="mt-4 space-y-2 text-slate-700">
+                                                <div className="mt-4 text-slate-700">
                   {currentQuestion.explanation ? (
-                    formatExplanationText(currentQuestion.explanation)
-                      .split("\n")
-                      .map((line, index) => (
-                        <span key={index} className="block leading-7">
-                          {line}
-                        </span>
-                      ))
+                    <MarkdownText content={currentQuestion.explanation} />
                   ) : (
-                    <span>Er is nog geen toelichting toegevoegd.</span>
+                    <p>Er is nog geen toelichting toegevoegd.</p>
                   )}
                 </div>
               </div>
