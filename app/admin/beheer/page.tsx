@@ -179,6 +179,14 @@ export default function AdminBeheerPage() {
     (topic) => topic.subject_id === editingCase?.subject_id,
   );
 
+
+  function scrollToEditPanel() {
+    window.setTimeout(() => {
+      document
+        .getElementById("edit-panel")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  }
   async function updateMcQuestion() {
     if (!editingMc) {
       return;
@@ -497,7 +505,10 @@ export default function AdminBeheerPage() {
                       <div className="flex gap-2">
                         <button
                           type="button"
-                          onClick={() => setEditingMc(item)}
+                          onClick={() => {
+                            setEditingMc(item);
+                            scrollToEditPanel();
+                          }}
                           className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-100"
                         >
                           Bewerken
@@ -571,7 +582,10 @@ export default function AdminBeheerPage() {
                       <div className="flex gap-2">
                         <button
                           type="button"
-                          onClick={() => setEditingCase(item)}
+                          onClick={() => {
+                            setEditingCase(item);
+                            scrollToEditPanel();
+                          }}
                           className="rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-xs font-semibold text-green-700 hover:bg-green-100"
                         >
                           Bewerken
@@ -605,7 +619,7 @@ export default function AdminBeheerPage() {
         )}
 
         {editingMc ? (
-          <section className="mt-8 rounded-3xl border border-blue-200 bg-blue-50 p-8">
+          <section id="edit-panel" className="mt-8 scroll-mt-6 rounded-3xl border border-blue-200 bg-blue-50 p-8">
             <h2 className="text-2xl font-bold text-blue-950">
               MC-vraag bewerken
             </h2>
@@ -762,7 +776,7 @@ export default function AdminBeheerPage() {
         ) : null}
 
         {editingCase ? (
-          <section className="mt-8 rounded-3xl border border-green-200 bg-green-50 p-8">
+          <section id="edit-panel" className="mt-8 scroll-mt-6 rounded-3xl border border-green-200 bg-green-50 p-8">
             <h2 className="text-2xl font-bold text-green-950">
               Casus bewerken
             </h2>
