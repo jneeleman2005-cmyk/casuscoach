@@ -311,18 +311,6 @@ export default async function AdminPage() {
                   Voeg casustekst, modelantwoord en beoordelingspunten toe.
                 </p>
               </a>
-              <a
-                href="/admin/beheer"
-                className="rounded-2xl border border-slate-200 bg-slate-50 p-6 transition hover:border-slate-300 hover:bg-slate-100"
-              >
-                <p className="text-lg font-bold text-slate-950">
-                  Content beheren
-                </p>
-
-                <p className="mt-3 text-sm leading-6 text-slate-600">
-                  Bekijk, bewerk of verwijder bestaande MC-vragen en casussen.
-                </p>
-              </a>
             </div>
           </div>
 

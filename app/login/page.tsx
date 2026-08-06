@@ -10,7 +10,9 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleLogin() {
+  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     setLoading(true);
     setError("");
 
@@ -22,7 +24,7 @@ export default function LoginPage() {
     });
 
     if (error) {
-      setError(error.message);
+      setError("Inloggen mislukt. Controleer je e-mailadres en wachtwoord.");
       setLoading(false);
       return;
     }
@@ -32,115 +34,105 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 px-6 py-10 text-slate-950">
-      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
-        <section>
-          <a
-            href="/"
-            className="text-sm font-medium text-slate-500 hover:text-blue-700"
-          >
-        Terug naar home
-          </a>
+      <div className="mx-auto max-w-4xl">
+        <a
+          href="/"
+          className="text-sm font-medium text-slate-500 hover:text-blue-700"
+        >
+          Terug naar home
+        </a>
 
-          <p className="mt-12 text-sm font-semibold uppercase tracking-wide text-blue-700">
-            Inloggen
-          </p>
+        <section className="mt-10 grid gap-8 lg:grid-cols-[1fr_0.8fr]">
+          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+            <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
+              Inloggen
+            </p>
 
-          <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
-            Log in om je accountomgeving te bekijken.
-          </h1>
+            <h1 className="mt-4 text-4xl font-bold tracking-tight">
+              Welkom terug.
+            </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-            Gebruik je e-mailadres en wachtwoord om toegang te krijgen tot je
-            persoonlijke omgeving binnen CasusCoach.
-          </p>
+            <p className="mt-4 leading-8 text-slate-600">
+              Log in om je voortgang, scores en opgeslagen casusantwoorden te
+              bekijken.
+            </p>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="font-semibold">Accountomgeving</p>
-              <p className="mt-2 text-sm leading-6 text-slate-600">
-                Bekijk je accountstatus en later je voortgang.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="font-semibold">Toegangsstatus</p>
-              <p className="mt-2 text-sm leading-6 text-slate-600">
-                Hier zie je je account en voortgang.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-          <h2 className="text-2xl font-bold">Inloggen</h2>
-
-          <p className="mt-3 leading-7 text-slate-600">
-            Vul je gegevens in om in te loggen.
-          </p>
-
-          <form className="mt-8 space-y-5">
-            <div>
-              <label
-                htmlFor="email"
-                className="text-sm font-semibold text-slate-700"
-              >
+            <form onSubmit={handleLogin} className="mt-8 space-y-5">
+              <label className="block text-sm font-semibold text-slate-700">
                 E-mailadres
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
+                  placeholder="naam@example.com"
+                  className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                />
               </label>
 
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="jij@example.com"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="password"
-                className="text-sm font-semibold text-slate-700"
-              >
+              <label className="block text-sm font-semibold text-slate-700">
                 Wachtwoord
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
+                  placeholder="********"
+                  className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                />
               </label>
 
-              <input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="********"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-              />
-            </div>
-
-            {error ? (
-              <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm leading-6 text-red-700">
-                {error}
+              <div className="flex justify-end">
+                <a
+                  href="/wachtwoord-vergeten"
+                  className="text-sm font-semibold text-blue-700 hover:text-blue-800"
+                >
+                  Wachtwoord vergeten?
+                </a>
               </div>
-            ) : null}
 
-            <button
-              type="button"
-              onClick={handleLogin}
-              disabled={loading}
-              className="w-full rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-slate-400"
-            >
-              {loading ? "Bezig met inloggen..." : "Inloggen"}
-            </button>
-          </form>
+              {error ? (
+                <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm leading-6 text-red-700">
+                  {error}
+                </div>
+              ) : null}
 
-          <div className="mt-6 border-t border-slate-200 pt-6 text-sm text-slate-600">
-            <p>
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+              >
+                {loading ? "Inloggen..." : "Inloggen"}
+              </button>
+            </form>
+
+            <p className="mt-6 text-sm text-slate-600">
               Nog geen account?{" "}
-              <a href="/registreren" className="font-semibold text-blue-700">
-                Maak een account aan
+              <a
+                href="/registreren"
+                className="font-semibold text-blue-700 hover:text-blue-800"
+              >
+                Account maken
               </a>
+              .
             </p>
           </div>
+
+          <aside className="rounded-3xl border border-blue-200 bg-blue-50 p-8">
+            <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
+              Met account
+            </p>
+
+            <h2 className="mt-3 text-2xl font-bold text-blue-950">
+              Bewaar je voortgang.
+            </h2>
+
+            <div className="mt-6 space-y-4 text-blue-950/80">
+              <p>Je MC-pogingen worden opgeslagen.</p>
+              <p>Je casusantwoorden blijven gekoppeld aan je account.</p>
+              <p>Je ziet je voortgang terug in je dashboard.</p>
+            </div>
+          </aside>
         </section>
       </div>
     </main>
