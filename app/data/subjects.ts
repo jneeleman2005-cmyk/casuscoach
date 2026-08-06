@@ -4,7 +4,7 @@ export const subjects = [
     slug: "strafrecht",
     available: true,
     description:
-      "Oefen met kernleerstukken uit het materiële strafrecht, zoals poging, medeplegen, noodweer en opzet.",
+      "Oefen met kernleerstukken uit het materiele strafrecht, zoals poging, medeplegen, noodweer en opzet.",
     topics: ["Poging", "Medeplegen", "Noodweer", "Opzet", "Diefstal"],
   },
   {
@@ -52,12 +52,12 @@ export const subjects = [
     slug: "staatsrecht",
     available: true,
     description:
-      "Oefen met grondrechten, trias politica, wetgeving en ministeriële verantwoordelijkheid.",
+      "Oefen met grondrechten, trias politica, wetgeving en ministeriele verantwoordelijkheid.",
     topics: [
       "Grondrechten",
       "Trias politica",
       "Wetgeving",
-      "Ministeriële verantwoordelijkheid",
+      "Ministeriele verantwoordelijkheid",
     ],
   },
   {

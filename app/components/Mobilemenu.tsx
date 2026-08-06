@@ -15,13 +15,13 @@ export default function MobileMenu({ isFreeMode }: MobileMenuProps) {
         type="button"
         onClick={() => setOpen((value) => !value)}
         aria-label={open ? "Menu sluiten" : "Menu openen"}
-        className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-700"
+        className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-900 shadow-sm transition hover:border-blue-200 hover:text-blue-700"
       >
-        {open ? (
-          <span className="text-2xl leading-none"></span>
-        ) : (
-          <span className="text-2xl leading-none"></span>
-        )}
+        <span className="flex flex-col gap-1">
+          <span className="block h-0.5 w-5 rounded bg-current" />
+          <span className="block h-0.5 w-5 rounded bg-current" />
+          <span className="block h-0.5 w-5 rounded bg-current" />
+        </span>
       </button>
 
       {open ? (

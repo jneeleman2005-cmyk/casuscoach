@@ -396,7 +396,7 @@ export default function AdminBeheerPage() {
             </p>
 
             <p className="mt-3 text-2xl font-bold text-blue-950">
-              {mcQuestions.length} MC-vragen Â· {openCases.length} casussen
+              {mcQuestions.length} MC-vragen - {openCases.length} casussen
             </p>
 
             <p className="mt-3 leading-7 text-blue-950/80">

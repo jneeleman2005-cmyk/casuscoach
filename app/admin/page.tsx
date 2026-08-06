@@ -276,91 +276,67 @@ export default async function AdminPage() {
 <section className="mt-8">
   <AdminPaymentSettings />
 </section>
-        <section className="mt-8 grid gap-6 lg:grid-cols-2">
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-            <h2 className="text-2xl font-bold">Snelle acties</h2>
+        <section className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+  <h2 className="text-2xl font-bold tracking-tight">Snelle acties</h2>
 
-            <p className="mt-3 leading-7 text-slate-600">
-              Voeg nieuwe oefenstof toe zonder in de database te hoeven werken.
-            </p>
+  <p className="mt-4 text-sm leading-6 text-slate-600">
+    Voeg oefenstof toe, beheer bestaande content en bekijk meldingen van studenten.
+  </p>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <a
-                href="/admin/vragen"
-                className="rounded-2xl border border-blue-200 bg-blue-50 p-6 transition hover:border-blue-300 hover:bg-blue-100"
-              >
-                <p className="text-lg font-bold text-blue-950">
-                  MC-vraag toevoegen
-                </p>
+  <div className="mt-8 grid gap-4 md:grid-cols-2">
+    <a
+      href="/admin/vragen"
+      className="block rounded-2xl border border-blue-200 bg-blue-50 p-6 transition hover:border-blue-300 hover:bg-blue-100"
+    >
+      <p className="text-lg font-bold text-blue-950">
+        MC-vraag toevoegen
+      </p>
 
-                <p className="mt-3 text-sm leading-6 text-blue-950/80">
-                  Voeg vraag, antwoordopties, juiste antwoord en toelichting
-                  toe.
-                </p>
-              </a>
+      <p className="mt-3 text-sm leading-6 text-blue-950/80">
+        Voeg vraag, antwoordopties, juiste antwoord en toelichting toe.
+      </p>
+    </a>
 
-              <a
-                href="/admin/casussen"
-                className="rounded-2xl border border-green-200 bg-green-50 p-6 transition hover:border-green-300 hover:bg-green-100"
-              >
-                <p className="text-lg font-bold text-green-950">
-                  Casus toevoegen
-                </p>
+    <a
+      href="/admin/casussen"
+      className="block rounded-2xl border border-green-200 bg-green-50 p-6 transition hover:border-green-300 hover:bg-green-100"
+    >
+      <p className="text-lg font-bold text-green-950">
+        Casus toevoegen
+      </p>
 
-                <p className="mt-3 text-sm leading-6 text-green-950/80">
-                  Voeg casustekst, modelantwoord en beoordelingspunten toe.
-                </p>
-              </a>
-            </div>
-          </div>
+      <p className="mt-3 text-sm leading-6 text-green-950/80">
+        Voeg casustekst, modelantwoord en beoordelingspunten toe.
+      </p>
+    </a>
 
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-            <h2 className="text-2xl font-bold">Livegang-check</h2>
+    <a
+      href="/admin/beheer"
+      className="block rounded-2xl border border-slate-200 bg-slate-50 p-6 transition hover:border-slate-300 hover:bg-slate-100"
+    >
+      <p className="text-lg font-bold text-slate-950">
+        Content beheren
+      </p>
 
-            <p className="mt-3 leading-7 text-slate-600">
-              Richting livegang wil je vooral genoeg kwalitatieve content hebben.
-            </p>
+      <p className="mt-3 text-sm leading-6 text-slate-600">
+        Bekijk, bewerk of verwijder bestaande MC-vragen en casussen.
+      </p>
+    </a>
 
-            <div className="mt-8 space-y-4">
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                <div className="flex items-center justify-between gap-4">
-                  <p className="font-semibold">MC-vragen minimum</p>
-                  <p className="font-bold">{mcCount}/40</p>
-                </div>
+    <a
+      href="/admin/feedback"
+      className="block rounded-2xl border border-orange-200 bg-orange-50 p-6 transition hover:border-orange-300 hover:bg-orange-100"
+    >
+      <p className="text-lg font-bold text-orange-950">
+        Feedback bekijken
+      </p>
 
-                <div className="mt-4 h-3 overflow-hidden rounded-full bg-white">
-                  <div
-                    className="h-full rounded-full bg-blue-700"
-                    style={{
-                      width: `${Math.min((mcCount / 40) * 100, 100)}%`,
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                <div className="flex items-center justify-between gap-4">
-                  <p className="font-semibold">Open casussen minimum</p>
-                  <p className="font-bold">{casesCount}/10</p>
-                </div>
-
-                <div className="mt-4 h-3 overflow-hidden rounded-full bg-white">
-                  <div
-                    className="h-full rounded-full bg-green-700"
-                    style={{
-                      width: `${Math.min((casesCount / 10) * 100, 100)}%`,
-                    }}
-                  />
-                </div>
-              </div>
-
-              <p className="text-sm leading-6 text-slate-600">
-                Advies voor eerste liveversie: minimaal 20 MC-vragen en 5
-                casussen per rechtsgebied.
-              </p>
-            </div>
-          </div>
-        </section>
+      <p className="mt-3 text-sm leading-6 text-orange-950/80">
+        Bekijk foutmeldingen, opmerkingen en technische meldingen van studenten.
+      </p>
+    </a>
+  </div>
+</section>
 
         <section className="mt-8 grid gap-6 lg:grid-cols-2">
           <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
