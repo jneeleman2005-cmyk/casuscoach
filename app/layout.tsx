@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import FeedbackButton from "./components/FeedbackButton";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
         {children}
 
         <Footer />
+        <FeedbackButton />
       </body>
     </html>
   );
