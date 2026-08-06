@@ -5,9 +5,26 @@ import FeedbackButton from "./components/FeedbackButton";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CasusCoach | Oefen rechten slimmer",
+  metadataBase: new URL("https://casuscoach.vercel.app"),
+  title: {
+    default: "CasusCoach | Oefen rechten slimmer",
+    template: "%s | CasusCoach",
+  },
   description:
     "Oefen MC-vragen en casussen per rechtsgebied en leerstuk. Voor rechtenstudenten die zich slimmer willen voorbereiden op tentamens.",
+  applicationName: "CasusCoach",
+  authors: [{ name: "CasusCoach" }],
+  creator: "CasusCoach",
+  publisher: "CasusCoach",
+  openGraph: {
+    title: "CasusCoach | Oefen rechten slimmer",
+    description:
+      "Oefen MC-vragen en casussen per rechtsgebied en leerstuk.",
+    url: "https://casuscoach.vercel.app",
+    siteName: "CasusCoach",
+    locale: "nl_NL",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
