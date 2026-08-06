@@ -256,11 +256,21 @@ export default function AdminBeheerPage() {
   }
 
   async function deleteMcQuestion(id: string) {
-    const confirmed = window.confirm(
-      "Weet je zeker dat je deze MC-vraag wilt verwijderen?",
+    const firstConfirmed = window.confirm(
+      "Let op: je gaat deze MC-vraag definitief verwijderen. Dit kan niet ongedaan worden gemaakt.\n\nWil je doorgaan?",
     );
 
-    if (!confirmed) {
+    if (!firstConfirmed) {
+      return;
+    }
+
+    const typedConfirmation = window.prompt(
+      'Extra controle: typ exact "VERWIJDEREN" om deze MC-vraag definitief te verwijderen.',
+    );
+
+    if (typedConfirmation !== "VERWIJDEREN") {
+      setMessage("");
+      setError("Verwijderen geannuleerd. Je moet exact VERWIJDEREN typen.");
       return;
     }
 
@@ -277,15 +287,25 @@ export default function AdminBeheerPage() {
     }
 
     setMcQuestions((items) => items.filter((item) => item.id !== id));
-    setMessage("MC-vraag verwijderd.");
+    setMessage("MC-vraag definitief verwijderd.");
   }
 
   async function deleteOpenCase(id: string) {
-    const confirmed = window.confirm(
-      "Weet je zeker dat je deze casus wilt verwijderen?",
+    const firstConfirmed = window.confirm(
+      "Let op: je gaat deze casus definitief verwijderen. Dit kan niet ongedaan worden gemaakt.\n\nWil je doorgaan?",
     );
 
-    if (!confirmed) {
+    if (!firstConfirmed) {
+      return;
+    }
+
+    const typedConfirmation = window.prompt(
+      'Extra controle: typ exact "VERWIJDEREN" om deze casus definitief te verwijderen.',
+    );
+
+    if (typedConfirmation !== "VERWIJDEREN") {
+      setMessage("");
+      setError("Verwijderen geannuleerd. Je moet exact VERWIJDEREN typen.");
       return;
     }
 
@@ -302,7 +322,7 @@ export default function AdminBeheerPage() {
     }
 
     setOpenCases((items) => items.filter((item) => item.id !== id));
-    setMessage("Casus verwijderd.");
+    setMessage("Casus definitief verwijderd.");
   }
 
   if (loading) {
@@ -376,7 +396,7 @@ export default function AdminBeheerPage() {
             </p>
 
             <p className="mt-3 text-2xl font-bold text-blue-950">
-              {mcQuestions.length} MC-vragen · {openCases.length} casussen
+              {mcQuestions.length} MC-vragen Â· {openCases.length} casussen
             </p>
 
             <p className="mt-3 leading-7 text-blue-950/80">
