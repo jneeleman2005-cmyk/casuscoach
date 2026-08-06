@@ -11,6 +11,8 @@ const categories = [
   { value: "technisch", label: "Technisch probleem" },
 ];
 
+const maxMessageLength = 2000;
+
 export default function ContactForm() {
   const searchParams = useSearchParams();
 
@@ -36,6 +38,7 @@ export default function ContactForm() {
   const [category, setCategory] = useState(initialCategory);
   const [page, setPage] = useState(initialPage);
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState("");
 
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState("");
@@ -48,8 +51,20 @@ export default function ContactForm() {
     setSuccess("");
     setError("");
 
+    if (website.trim().length > 0) {
+      setSuccess("Bedankt. Je melding is opgeslagen.");
+      setSaving(false);
+      return;
+    }
+
     if (message.trim().length < 10) {
       setError("Omschrijf je melding iets uitgebreider.");
+      setSaving(false);
+      return;
+    }
+
+    if (message.trim().length > maxMessageLength) {
+      setError("Je melding is te lang. Houd je bericht onder 2000 tekens.");
       setSaving(false);
       return;
     }
@@ -74,11 +89,23 @@ export default function ContactForm() {
     setCategory("algemeen");
     setPage("");
     setMessage("");
+    setWebsite("");
     setSaving(false);
   }
 
   return (
     <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+      <label className="hidden">
+        Website
+        <input
+          type="text"
+          value={website}
+          onChange={(event) => setWebsite(event.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </label>
+
       <label className="block text-sm font-semibold text-slate-700">
         Waar gaat het over?
         <select
@@ -101,6 +128,7 @@ export default function ContactForm() {
           value={page}
           onChange={(event) => setPage(event.target.value)}
           placeholder="/mc"
+          maxLength={200}
           className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
         />
       </label>
@@ -112,6 +140,7 @@ export default function ContactForm() {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="naam@example.com"
+          maxLength={200}
           className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
         />
       </label>
@@ -123,10 +152,16 @@ export default function ContactForm() {
           onChange={(event) => setMessage(event.target.value)}
           required
           rows={6}
+          minLength={10}
+          maxLength={maxMessageLength}
           placeholder="Beschrijf wat er niet klopt of wat er beter kan."
           className="mt-2 w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
         />
       </label>
+
+      <p className="text-sm text-slate-500">
+        {message.length} / {maxMessageLength} tekens
+      </p>
 
       {error ? (
         <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm leading-6 text-red-700">
