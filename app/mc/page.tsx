@@ -31,6 +31,16 @@ type McQuestion = {
   is_uitgebreid: boolean;
 };
 
+
+function formatExplanationText(value: string) {
+  return value
+    .replaceAll("**", "")
+    .replace(/\s*:\s*-\s*/g, ":\n- ")
+    .replace(/\s*;\s*-\s*/g, "\n- ")
+    .replace(/\s+\-\s*/g, "\n- ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
 export default function McPage() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -390,10 +400,19 @@ export default function McPage() {
                     : `Niet goed. Het juiste antwoord is ${currentQuestion.correct_answer}.`}
                 </p>
 
-                <p className="mt-4 leading-8 text-slate-700">
-                  {currentQuestion.explanation ||
-                    "Er is nog geen toelichting toegevoegd."}
-                </p>
+                                <div className="mt-4 space-y-2 text-slate-700">
+                  {currentQuestion.explanation ? (
+                    formatExplanationText(currentQuestion.explanation)
+                      .split("\n")
+                      .map((line, index) => (
+                        <span key={index} className="block leading-7">
+                          {line}
+                        </span>
+                      ))
+                  ) : (
+                    <span>Er is nog geen toelichting toegevoegd.</span>
+                  )}
+                </div>
               </div>
             ) : null}
 
